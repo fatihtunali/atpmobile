@@ -1,0 +1,11 @@
+{
+  "name": "@shared/components",
+  "version": "1.0.0",
+  "main": "index.tsx",
+  "types": "index.tsx",
+  "private": true,
+  "peerDependencies": {
+    "react": "*",
+    "react-native": "*"
+  }
+}

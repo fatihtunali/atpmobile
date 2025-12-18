@@ -1,0 +1,37 @@
+{
+  "name": "airporttransfer-mobile",
+  "version": "1.0.0",
+  "private": true,
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
+  "scripts": {
+    "customer": "npm run start --workspace=apps/customer",
+    "driver": "npm run start --workspace=apps/driver",
+    "partner": "npm run start --workspace=apps/partner",
+    "customer:ios": "npm run ios --workspace=apps/customer",
+    "customer:android": "npm run android --workspace=apps/customer",
+    "driver:ios": "npm run ios --workspace=apps/driver",
+    "driver:android": "npm run android --workspace=apps/driver",
+    "partner:ios": "npm run ios --workspace=apps/partner",
+    "partner:android": "npm run android --workspace=apps/partner",
+    "build:customer:ios": "npm run build:ios --workspace=apps/customer",
+    "build:customer:android": "npm run build:android --workspace=apps/customer",
+    "build:driver:ios": "npm run build:ios --workspace=apps/driver",
+    "build:driver:android": "npm run build:android --workspace=apps/driver",
+    "build:partner:ios": "npm run build:ios --workspace=apps/partner",
+    "build:partner:android": "npm run build:android --workspace=apps/partner",
+    "lint": "eslint .",
+    "format": "prettier --write ."
+  },
+  "devDependencies": {
+    "@types/react": "~18.2.45",
+    "eslint": "^8.57.0",
+    "prettier": "^3.2.5",
+    "typescript": "^5.3.3"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}
