@@ -27,7 +27,6 @@
           "fetch",
           "remote-notification"
         ],
-        "NSCameraUsageDescription": "Camera access may be required for document verification.",
         "ITSAppUsesNonExemptEncryption": false
       }
     },
