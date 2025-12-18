@@ -22,7 +22,6 @@
       "infoPlist": {
         "NSLocationWhenInUseUsageDescription": "We need your location to show nearby airports and track your ride.",
         "NSLocationAlwaysAndWhenInUseUsageDescription": "We need your location to track your ride in real-time.",
-        "NSCameraUsageDescription": "We need camera access to scan payment cards for faster checkout.",
         "ITSAppUsesNonExemptEncryption": false
       }
     },
@@ -58,13 +57,6 @@
         {
           "icon": "./assets/notification-icon.png",
           "color": "#0d9488"
-        }
-      ],
-      [
-        "@stripe/stripe-react-native",
-        {
-          "merchantIdentifier": "merchant.com.airporttransferportal.customer",
-          "enableGooglePay": true
         }
       ]
     ],
