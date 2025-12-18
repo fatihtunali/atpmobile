@@ -12,14 +12,18 @@
       "resizeMode": "contain",
       "backgroundColor": "#0d9488"
     },
-    "assetBundlePatterns": ["**/*"],
+    "assetBundlePatterns": [
+      "**/*"
+    ],
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "com.airporttransferportal.customer",
       "buildNumber": "1",
       "infoPlist": {
         "NSLocationWhenInUseUsageDescription": "We need your location to show nearby airports and track your ride.",
-        "NSLocationAlwaysAndWhenInUseUsageDescription": "We need your location to track your ride in real-time."
+        "NSLocationAlwaysAndWhenInUseUsageDescription": "We need your location to track your ride in real-time.",
+        "NSCameraUsageDescription": "We need camera access to scan payment cards for faster checkout.",
+        "ITSAppUsesNonExemptEncryption": false
       }
     },
     "android": {
@@ -31,7 +35,9 @@
       "versionCode": 1,
       "permissions": [
         "ACCESS_COARSE_LOCATION",
-        "ACCESS_FINE_LOCATION"
+        "ACCESS_FINE_LOCATION",
+        "android.permission.ACCESS_COARSE_LOCATION",
+        "android.permission.ACCESS_FINE_LOCATION"
       ]
     },
     "web": {
@@ -54,15 +60,25 @@
           "color": "#0d9488"
         }
       ],
-      "@stripe/stripe-react-native"
+      [
+        "@stripe/stripe-react-native",
+        {
+          "merchantIdentifier": "merchant.com.airporttransferportal.customer",
+          "enableGooglePay": true
+        }
+      ]
     ],
     "experiments": {
       "typedRoutes": true
     },
     "extra": {
       "eas": {
-        "projectId": "YOUR_EAS_PROJECT_ID"
+        "projectId": "73b988a4-4a6e-4618-b643-9d71cc73477e"
+      },
+      "router": {
+        "origin": false
       }
-    }
+    },
+    "owner": "fatihtunali"
   }
 }

@@ -12,11 +12,17 @@
       "resizeMode": "contain",
       "backgroundColor": "#0d9488"
     },
-    "assetBundlePatterns": ["**/*"],
+    "assetBundlePatterns": [
+      "**/*"
+    ],
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "com.airporttransferportal.partner",
-      "buildNumber": "1"
+      "buildNumber": "1",
+      "infoPlist": {
+        "NSCameraUsageDescription": "Camera access may be required for document uploads.",
+        "ITSAppUsesNonExemptEncryption": false
+      }
     },
     "android": {
       "adaptiveIcon": {
@@ -46,8 +52,12 @@
     },
     "extra": {
       "eas": {
-        "projectId": "YOUR_EAS_PROJECT_ID"
+        "projectId": "90ca7fc0-ecf1-49c2-adfd-5d1d2b47987c"
+      },
+      "router": {
+        "origin": false
       }
-    }
+    },
+    "owner": "fatihtunali"
   }
 }
