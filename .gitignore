@@ -49,6 +49,9 @@ yarn-error.*
 .env.production.local
 *.env
 
+# Google Play Service Account (secret)
+google-service-account.json
+
 # macOS
 .DS_Store
 *.pem

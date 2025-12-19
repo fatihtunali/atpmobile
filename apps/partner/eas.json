@@ -22,7 +22,7 @@
         "image": "macos-sequoia-15.3-xcode-16.2"
       },
       "android": {
-        "buildType": "apk"
+        "buildType": "app-bundle"
       }
     }
   },
@@ -31,6 +31,10 @@
       "ios": {
         "appleTeamId": "KX5N2U5RA2",
         "ascAppId": "6756719691"
+      },
+      "android": {
+        "serviceAccountKeyPath": "./google-service-account.json",
+        "track": "internal"
       }
     }
   }
