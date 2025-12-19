@@ -183,20 +183,60 @@ export default function HomeScreen() {
     }
   };
 
+  // Temporary date/time for picker before confirmation (iOS)
+  const [tempDate, setTempDate] = useState(pickupDate);
+  const [tempTime, setTempTime] = useState(pickupTime);
+
   const handleDateChange = (event: any, selectedDate?: Date) => {
-    setShowDatePicker(Platform.OS === 'ios');
-    if (selectedDate) {
-      setPickupDate(selectedDate);
+    if (Platform.OS === 'android') {
+      setShowDatePicker(false);
+      if (event.type === 'set' && selectedDate) {
+        setPickupDate(selectedDate);
+      }
+    } else {
+      // iOS - keep picker open until confirmed
+      if (selectedDate) {
+        setTempDate(selectedDate);
+      }
     }
   };
 
+  const confirmDateSelection = () => {
+    setPickupDate(tempDate);
+    setShowDatePicker(false);
+  };
+
   const handleTimeChange = (event: any, selectedDate?: Date) => {
-    setShowTimePicker(Platform.OS === 'ios');
-    if (selectedDate) {
-      const hours = selectedDate.getHours().toString().padStart(2, '0');
-      const minutes = selectedDate.getMinutes().toString().padStart(2, '0');
-      setPickupTime(`${hours}:${minutes}`);
+    if (Platform.OS === 'android') {
+      setShowTimePicker(false);
+      if (event.type === 'set' && selectedDate) {
+        const hours = selectedDate.getHours().toString().padStart(2, '0');
+        const minutes = selectedDate.getMinutes().toString().padStart(2, '0');
+        setPickupTime(`${hours}:${minutes}`);
+      }
+    } else {
+      // iOS - keep picker open until confirmed
+      if (selectedDate) {
+        const hours = selectedDate.getHours().toString().padStart(2, '0');
+        const minutes = selectedDate.getMinutes().toString().padStart(2, '0');
+        setTempTime(`${hours}:${minutes}`);
+      }
     }
+  };
+
+  const confirmTimeSelection = () => {
+    setPickupTime(tempTime);
+    setShowTimePicker(false);
+  };
+
+  const openDatePicker = () => {
+    setTempDate(pickupDate);
+    setShowDatePicker(true);
+  };
+
+  const openTimePicker = () => {
+    setTempTime(pickupTime);
+    setShowTimePicker(true);
   };
 
   const handleSearch = () => {
@@ -379,7 +419,7 @@ export default function HomeScreen() {
         <View style={styles.detailsRow}>
           <TouchableOpacity
             style={styles.detailItem}
-            onPress={() => setShowDatePicker(true)}
+            onPress={openDatePicker}
           >
             <Ionicons name="calendar-outline" size={20} color={colors.textMuted} />
             <Text style={styles.detailText}>{formatDate(pickupDate)}</Text>
@@ -387,7 +427,7 @@ export default function HomeScreen() {
 
           <TouchableOpacity
             style={styles.detailItem}
-            onPress={() => setShowTimePicker(true)}
+            onPress={openTimePicker}
           >
             <Ionicons name="time-outline" size={20} color={colors.textMuted} />
             <Text style={styles.detailText}>{formatTime12h(pickupTime)}</Text>
@@ -620,8 +660,40 @@ export default function HomeScreen() {
         </TouchableOpacity>
       </Modal>
 
-      {/* Date Picker */}
-      {showDatePicker && (
+      {/* Date Picker - iOS Modal */}
+      {Platform.OS === 'ios' && showDatePicker && (
+        <Modal
+          visible={showDatePicker}
+          animationType="slide"
+          transparent
+          onRequestClose={() => setShowDatePicker(false)}
+        >
+          <View style={styles.bottomPickerOverlay}>
+            <View style={styles.dateTimePickerContainer}>
+              <View style={styles.dateTimePickerHeader}>
+                <TouchableOpacity onPress={() => setShowDatePicker(false)}>
+                  <Text style={styles.dateTimePickerCancel}>Cancel</Text>
+                </TouchableOpacity>
+                <Text style={styles.dateTimePickerTitle}>Select Date</Text>
+                <TouchableOpacity onPress={confirmDateSelection}>
+                  <Text style={styles.dateTimePickerDone}>Done</Text>
+                </TouchableOpacity>
+              </View>
+              <DateTimePicker
+                value={tempDate}
+                mode="date"
+                display="spinner"
+                minimumDate={new Date()}
+                onChange={handleDateChange}
+                style={styles.iosPicker}
+              />
+            </View>
+          </View>
+        </Modal>
+      )}
+
+      {/* Date Picker - Android */}
+      {Platform.OS === 'android' && showDatePicker && (
         <DateTimePicker
           value={pickupDate}
           mode="date"
@@ -631,10 +703,51 @@ export default function HomeScreen() {
         />
       )}
 
-      {/* Time Picker */}
-      {showTimePicker && (
+      {/* Time Picker - iOS Modal */}
+      {Platform.OS === 'ios' && showTimePicker && (
+        <Modal
+          visible={showTimePicker}
+          animationType="slide"
+          transparent
+          onRequestClose={() => setShowTimePicker(false)}
+        >
+          <View style={styles.bottomPickerOverlay}>
+            <View style={styles.dateTimePickerContainer}>
+              <View style={styles.dateTimePickerHeader}>
+                <TouchableOpacity onPress={() => setShowTimePicker(false)}>
+                  <Text style={styles.dateTimePickerCancel}>Cancel</Text>
+                </TouchableOpacity>
+                <Text style={styles.dateTimePickerTitle}>Select Time</Text>
+                <TouchableOpacity onPress={confirmTimeSelection}>
+                  <Text style={styles.dateTimePickerDone}>Done</Text>
+                </TouchableOpacity>
+              </View>
+              <DateTimePicker
+                value={(() => {
+                  const [hours, minutes] = tempTime.split(':').map(Number);
+                  const date = new Date();
+                  date.setHours(hours || 10, minutes || 0, 0, 0);
+                  return date;
+                })()}
+                mode="time"
+                display="spinner"
+                onChange={handleTimeChange}
+                style={styles.iosPicker}
+              />
+            </View>
+          </View>
+        </Modal>
+      )}
+
+      {/* Time Picker - Android */}
+      {Platform.OS === 'android' && showTimePicker && (
         <DateTimePicker
-          value={new Date(`2000-01-01T${pickupTime}:00`)}
+          value={(() => {
+            const [hours, minutes] = pickupTime.split(':').map(Number);
+            const date = new Date();
+            date.setHours(hours || 10, minutes || 0, 0, 0);
+            return date;
+          })()}
           mode="time"
           display="default"
           onChange={handleTimeChange}
@@ -921,6 +1034,11 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
+  bottomPickerOverlay: {
+    flex: 1,
+    backgroundColor: 'rgba(0,0,0,0.5)',
+    justifyContent: 'flex-end',
+  },
   pickerContainer: {
     backgroundColor: colors.surface,
     borderRadius: 16,
@@ -958,5 +1076,37 @@ const styles = StyleSheet.create({
   },
   passengerOptionTextActive: {
     color: '#fff',
+  },
+  // Date/Time picker styles for iOS
+  dateTimePickerContainer: {
+    backgroundColor: colors.surface,
+    borderTopLeftRadius: 16,
+    borderTopRightRadius: 16,
+    paddingBottom: 40,
+  },
+  dateTimePickerHeader: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    padding: spacing.md,
+    borderBottomWidth: 1,
+    borderBottomColor: colors.border,
+  },
+  dateTimePickerTitle: {
+    fontSize: 17,
+    fontWeight: '600',
+    color: colors.text,
+  },
+  dateTimePickerCancel: {
+    fontSize: 16,
+    color: colors.textSecondary,
+  },
+  dateTimePickerDone: {
+    fontSize: 16,
+    fontWeight: '600',
+    color: colors.primary,
+  },
+  iosPicker: {
+    height: 200,
   },
 });
