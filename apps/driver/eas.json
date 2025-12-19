@@ -33,7 +33,7 @@
         "ascAppId": "6756719411"
       },
       "android": {
-        "serviceAccountKeyPath": "./google-service-account.json",
+        "serviceAccountKeyPath": "../../google-service-account.json",
         "track": "internal"
       }
     }
