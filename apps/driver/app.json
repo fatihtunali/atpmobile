@@ -2,7 +2,7 @@
   "expo": {
     "name": "ATP Driver",
     "slug": "atp-driver",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
@@ -18,7 +18,7 @@
     "ios": {
       "supportsTablet": false,
       "bundleIdentifier": "com.airporttransferportal.driver",
-      "buildNumber": "4",
+      "buildNumber": "5",
       "infoPlist": {
         "NSLocationWhenInUseUsageDescription": "We need your location to show your position to customers and navigate to pickups.",
         "NSLocationAlwaysAndWhenInUseUsageDescription": "We need your location to track your position during rides, even when the app is in the background.",
@@ -36,7 +36,7 @@
         "backgroundColor": "#0d9488"
       },
       "package": "com.airporttransferportal.driver",
-      "versionCode": 1,
+      "versionCode": 2,
       "permissions": [
         "ACCESS_COARSE_LOCATION",
         "ACCESS_FINE_LOCATION",
