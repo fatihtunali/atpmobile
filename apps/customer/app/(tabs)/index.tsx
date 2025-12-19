@@ -1,16 +1,31 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   View,
   Text,
   ScrollView,
   TouchableOpacity,
   StyleSheet,
+  Modal,
+  TextInput,
+  FlatList,
+  Platform,
+  Alert,
 } from 'react-native';
 import { router } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
-import { Button, Card, Input, colors, spacing } from '@shared/components';
+import DateTimePicker from '@react-native-community/datetimepicker';
+import { Button, Card, Loading, colors, spacing } from '@shared/components';
 import { useSearchStore } from '@shared/stores';
+import { commonApi } from '@shared/api';
 import { formatDate } from '@shared/utils';
+
+interface Airport {
+  id: number;
+  code: string;
+  name: string;
+  city: string;
+  country: string;
+}
 
 export default function HomeScreen() {
   const {
@@ -25,12 +40,136 @@ export default function HomeScreen() {
     passengers,
     setPickupType,
     setDropoffType,
+    setPickupAirport,
+    setDropoffAirport,
+    setPickupAddress,
+    setDropoffAddress,
+    setPickupDate,
+    setPickupTime,
+    setPassengers,
     swapLocations,
   } = useSearchStore();
 
+  // Modal states
+  const [airportModalVisible, setAirportModalVisible] = useState(false);
+  const [airportModalType, setAirportModalType] = useState<'pickup' | 'dropoff'>('pickup');
+  const [airportSearch, setAirportSearch] = useState('');
+  const [airports, setAirports] = useState<Airport[]>([]);
+  const [loadingAirports, setLoadingAirports] = useState(false);
+
+  // Date/Time picker states
+  const [showDatePicker, setShowDatePicker] = useState(false);
+  const [showTimePicker, setShowTimePicker] = useState(false);
+  const [showPassengerPicker, setShowPassengerPicker] = useState(false);
+
+  // Address modal state
+  const [addressModalVisible, setAddressModalVisible] = useState(false);
+  const [addressModalType, setAddressModalType] = useState<'pickup' | 'dropoff'>('pickup');
+  const [addressInput, setAddressInput] = useState('');
+
+  // Search airports
+  useEffect(() => {
+    if (airportModalVisible) {
+      searchAirports(airportSearch);
+    }
+  }, [airportSearch, airportModalVisible]);
+
+  const searchAirports = async (query: string) => {
+    setLoadingAirports(true);
+    try {
+      const response = await commonApi.getAirports(query || undefined);
+      if (response.success && response.data) {
+        setAirports(response.data);
+      }
+    } catch (error) {
+      console.error('Failed to search airports:', error);
+    } finally {
+      setLoadingAirports(false);
+    }
+  };
+
+  const openAirportModal = (type: 'pickup' | 'dropoff') => {
+    setAirportModalType(type);
+    setAirportSearch('');
+    setAirportModalVisible(true);
+  };
+
+  const selectAirport = (airport: Airport) => {
+    if (airportModalType === 'pickup') {
+      setPickupAirport({ code: airport.code, name: `${airport.name} (${airport.code})` });
+    } else {
+      setDropoffAirport({ code: airport.code, name: `${airport.name} (${airport.code})` });
+    }
+    setAirportModalVisible(false);
+  };
+
+  const openAddressModal = (type: 'pickup' | 'dropoff') => {
+    setAddressModalType(type);
+    setAddressInput(type === 'pickup' ? pickupAddress : dropoffAddress);
+    setAddressModalVisible(true);
+  };
+
+  const saveAddress = () => {
+    if (addressModalType === 'pickup') {
+      setPickupAddress(addressInput);
+    } else {
+      setDropoffAddress(addressInput);
+    }
+    setAddressModalVisible(false);
+  };
+
+  const handleLocationPress = (type: 'pickup' | 'dropoff') => {
+    const locationType = type === 'pickup' ? pickupType : dropoffType;
+    if (locationType === 'airport') {
+      openAirportModal(type);
+    } else {
+      openAddressModal(type);
+    }
+  };
+
+  const handleDateChange = (event: any, selectedDate?: Date) => {
+    setShowDatePicker(Platform.OS === 'ios');
+    if (selectedDate) {
+      setPickupDate(selectedDate);
+    }
+  };
+
+  const handleTimeChange = (event: any, selectedDate?: Date) => {
+    setShowTimePicker(Platform.OS === 'ios');
+    if (selectedDate) {
+      const hours = selectedDate.getHours().toString().padStart(2, '0');
+      const minutes = selectedDate.getMinutes().toString().padStart(2, '0');
+      setPickupTime(`${hours}:${minutes}`);
+    }
+  };
+
   const handleSearch = () => {
-    // Validate and navigate to results
+    // Validate
+    if (pickupType === 'airport' && !pickupAirport) {
+      Alert.alert('Missing Information', 'Please select a pickup airport');
+      return;
+    }
+    if (dropoffType === 'airport' && !dropoffAirport) {
+      Alert.alert('Missing Information', 'Please select a dropoff airport');
+      return;
+    }
+    if (pickupType === 'address' && !pickupAddress) {
+      Alert.alert('Missing Information', 'Please enter a pickup address');
+      return;
+    }
+    if (dropoffType === 'address' && !dropoffAddress) {
+      Alert.alert('Missing Information', 'Please enter a dropoff address');
+      return;
+    }
+
     router.push('/search/results');
+  };
+
+  const formatTime12h = (time: string) => {
+    const [hours, minutes] = time.split(':').map(Number);
+    const period = hours >= 12 ? 'PM' : 'AM';
+    const hour12 = hours % 12 || 12;
+    return `${hour12}:${minutes.toString().padStart(2, '0')} ${period}`;
   };
 
   return (
@@ -97,7 +236,10 @@ export default function HomeScreen() {
             </TouchableOpacity>
           </View>
 
-          <TouchableOpacity style={styles.locationInput}>
+          <TouchableOpacity
+            style={styles.locationInput}
+            onPress={() => handleLocationPress('pickup')}
+          >
             <Ionicons name="search" size={20} color={colors.textMuted} />
             <Text style={styles.locationInputText}>
               {pickupType === 'airport'
@@ -164,7 +306,10 @@ export default function HomeScreen() {
             </TouchableOpacity>
           </View>
 
-          <TouchableOpacity style={styles.locationInput}>
+          <TouchableOpacity
+            style={styles.locationInput}
+            onPress={() => handleLocationPress('dropoff')}
+          >
             <Ionicons name="search" size={20} color={colors.textMuted} />
             <Text style={styles.locationInputText}>
               {dropoffType === 'airport'
@@ -176,17 +321,26 @@ export default function HomeScreen() {
 
         {/* Date, Time, Passengers */}
         <View style={styles.detailsRow}>
-          <TouchableOpacity style={styles.detailItem}>
+          <TouchableOpacity
+            style={styles.detailItem}
+            onPress={() => setShowDatePicker(true)}
+          >
             <Ionicons name="calendar-outline" size={20} color={colors.textMuted} />
             <Text style={styles.detailText}>{formatDate(pickupDate)}</Text>
           </TouchableOpacity>
 
-          <TouchableOpacity style={styles.detailItem}>
+          <TouchableOpacity
+            style={styles.detailItem}
+            onPress={() => setShowTimePicker(true)}
+          >
             <Ionicons name="time-outline" size={20} color={colors.textMuted} />
-            <Text style={styles.detailText}>{pickupTime}</Text>
+            <Text style={styles.detailText}>{formatTime12h(pickupTime)}</Text>
           </TouchableOpacity>
 
-          <TouchableOpacity style={styles.detailItem}>
+          <TouchableOpacity
+            style={styles.detailItem}
+            onPress={() => setShowPassengerPicker(true)}
+          >
             <Ionicons name="people-outline" size={20} color={colors.textMuted} />
             <Text style={styles.detailText}>{passengers}</Text>
           </TouchableOpacity>
@@ -227,6 +381,169 @@ export default function HomeScreen() {
           <Text style={styles.featureText}>Flight monitoring</Text>
         </View>
       </View>
+
+      {/* Airport Search Modal */}
+      <Modal
+        visible={airportModalVisible}
+        animationType="slide"
+        presentationStyle="pageSheet"
+        onRequestClose={() => setAirportModalVisible(false)}
+      >
+        <View style={styles.modalContainer}>
+          <View style={styles.modalHeader}>
+            <Text style={styles.modalTitle}>
+              Select {airportModalType === 'pickup' ? 'Pickup' : 'Dropoff'} Airport
+            </Text>
+            <TouchableOpacity onPress={() => setAirportModalVisible(false)}>
+              <Ionicons name="close" size={24} color={colors.text} />
+            </TouchableOpacity>
+          </View>
+
+          <View style={styles.searchInputContainer}>
+            <Ionicons name="search" size={20} color={colors.textMuted} />
+            <TextInput
+              style={styles.searchInput}
+              placeholder="Search airports..."
+              placeholderTextColor={colors.textMuted}
+              value={airportSearch}
+              onChangeText={setAirportSearch}
+              autoFocus
+            />
+          </View>
+
+          {loadingAirports ? (
+            <View style={styles.loadingContainer}>
+              <Loading />
+            </View>
+          ) : (
+            <FlatList
+              data={airports}
+              keyExtractor={(item) => item.id.toString()}
+              renderItem={({ item }) => (
+                <TouchableOpacity
+                  style={styles.airportItem}
+                  onPress={() => selectAirport(item)}
+                >
+                  <View style={styles.airportIcon}>
+                    <Ionicons name="airplane" size={20} color={colors.primary} />
+                  </View>
+                  <View style={styles.airportInfo}>
+                    <Text style={styles.airportName}>
+                      {item.name} ({item.code})
+                    </Text>
+                    <Text style={styles.airportLocation}>
+                      {item.city}, {item.country}
+                    </Text>
+                  </View>
+                </TouchableOpacity>
+              )}
+              ListEmptyComponent={
+                <Text style={styles.emptyText}>
+                  {airportSearch ? 'No airports found' : 'Type to search airports'}
+                </Text>
+              }
+            />
+          )}
+        </View>
+      </Modal>
+
+      {/* Address Modal */}
+      <Modal
+        visible={addressModalVisible}
+        animationType="slide"
+        presentationStyle="pageSheet"
+        onRequestClose={() => setAddressModalVisible(false)}
+      >
+        <View style={styles.modalContainer}>
+          <View style={styles.modalHeader}>
+            <Text style={styles.modalTitle}>
+              Enter {addressModalType === 'pickup' ? 'Pickup' : 'Dropoff'} Address
+            </Text>
+            <TouchableOpacity onPress={() => setAddressModalVisible(false)}>
+              <Ionicons name="close" size={24} color={colors.text} />
+            </TouchableOpacity>
+          </View>
+
+          <View style={styles.addressInputContainer}>
+            <TextInput
+              style={styles.addressInput}
+              placeholder="Enter full address..."
+              placeholderTextColor={colors.textMuted}
+              value={addressInput}
+              onChangeText={setAddressInput}
+              multiline
+              autoFocus
+            />
+          </View>
+
+          <View style={styles.addressButtons}>
+            <Button title="Save Address" onPress={saveAddress} fullWidth />
+          </View>
+        </View>
+      </Modal>
+
+      {/* Passenger Picker Modal */}
+      <Modal
+        visible={showPassengerPicker}
+        animationType="fade"
+        transparent
+        onRequestClose={() => setShowPassengerPicker(false)}
+      >
+        <TouchableOpacity
+          style={styles.pickerOverlay}
+          activeOpacity={1}
+          onPress={() => setShowPassengerPicker(false)}
+        >
+          <View style={styles.pickerContainer}>
+            <Text style={styles.pickerTitle}>Number of Passengers</Text>
+            <View style={styles.passengerOptions}>
+              {[1, 2, 3, 4, 5, 6, 7, 8].map((num) => (
+                <TouchableOpacity
+                  key={num}
+                  style={[
+                    styles.passengerOption,
+                    passengers === num && styles.passengerOptionActive,
+                  ]}
+                  onPress={() => {
+                    setPassengers(num);
+                    setShowPassengerPicker(false);
+                  }}
+                >
+                  <Text
+                    style={[
+                      styles.passengerOptionText,
+                      passengers === num && styles.passengerOptionTextActive,
+                    ]}
+                  >
+                    {num}
+                  </Text>
+                </TouchableOpacity>
+              ))}
+            </View>
+          </View>
+        </TouchableOpacity>
+      </Modal>
+
+      {/* Date Picker */}
+      {showDatePicker && (
+        <DateTimePicker
+          value={pickupDate}
+          mode="date"
+          display="default"
+          minimumDate={new Date()}
+          onChange={handleDateChange}
+        />
+      )}
+
+      {/* Time Picker */}
+      {showTimePicker && (
+        <DateTimePicker
+          value={new Date(`2000-01-01T${pickupTime}:00`)}
+          mode="time"
+          display="default"
+          onChange={handleTimeChange}
+        />
+      )}
     </ScrollView>
   );
 }
@@ -380,5 +697,142 @@ const styles = StyleSheet.create({
     fontSize: 11,
     color: colors.textMuted,
     textAlign: 'center',
+  },
+  // Modal styles
+  modalContainer: {
+    flex: 1,
+    backgroundColor: colors.background,
+  },
+  modalHeader: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    padding: spacing.md,
+    borderBottomWidth: 1,
+    borderBottomColor: colors.border,
+    backgroundColor: colors.surface,
+  },
+  modalTitle: {
+    fontSize: 18,
+    fontWeight: '600',
+    color: colors.text,
+  },
+  searchInputContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    margin: spacing.md,
+    padding: spacing.md,
+    backgroundColor: colors.surface,
+    borderRadius: 12,
+    borderWidth: 1,
+    borderColor: colors.border,
+  },
+  searchInput: {
+    flex: 1,
+    marginLeft: spacing.sm,
+    fontSize: 16,
+    color: colors.text,
+  },
+  loadingContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  airportItem: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    padding: spacing.md,
+    borderBottomWidth: 1,
+    borderBottomColor: colors.border,
+  },
+  airportIcon: {
+    width: 40,
+    height: 40,
+    borderRadius: 20,
+    backgroundColor: `${colors.primary}15`,
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginRight: spacing.md,
+  },
+  airportInfo: {
+    flex: 1,
+  },
+  airportName: {
+    fontSize: 15,
+    fontWeight: '600',
+    color: colors.text,
+  },
+  airportLocation: {
+    fontSize: 13,
+    color: colors.textSecondary,
+    marginTop: 2,
+  },
+  emptyText: {
+    textAlign: 'center',
+    color: colors.textMuted,
+    marginTop: spacing.xl,
+  },
+  // Address modal styles
+  addressInputContainer: {
+    margin: spacing.md,
+    padding: spacing.md,
+    backgroundColor: colors.surface,
+    borderRadius: 12,
+    borderWidth: 1,
+    borderColor: colors.border,
+  },
+  addressInput: {
+    fontSize: 16,
+    color: colors.text,
+    minHeight: 100,
+    textAlignVertical: 'top',
+  },
+  addressButtons: {
+    padding: spacing.md,
+  },
+  // Passenger picker styles
+  pickerOverlay: {
+    flex: 1,
+    backgroundColor: 'rgba(0,0,0,0.5)',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  pickerContainer: {
+    backgroundColor: colors.surface,
+    borderRadius: 16,
+    padding: spacing.lg,
+    width: '80%',
+  },
+  pickerTitle: {
+    fontSize: 18,
+    fontWeight: '600',
+    color: colors.text,
+    textAlign: 'center',
+    marginBottom: spacing.md,
+  },
+  passengerOptions: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    justifyContent: 'center',
+  },
+  passengerOption: {
+    width: 48,
+    height: 48,
+    borderRadius: 24,
+    backgroundColor: colors.background,
+    justifyContent: 'center',
+    alignItems: 'center',
+    margin: spacing.xs,
+  },
+  passengerOptionActive: {
+    backgroundColor: colors.primary,
+  },
+  passengerOptionText: {
+    fontSize: 18,
+    fontWeight: '600',
+    color: colors.text,
+  },
+  passengerOptionTextActive: {
+    color: '#fff',
   },
 });

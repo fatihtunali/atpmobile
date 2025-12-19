@@ -12,13 +12,13 @@ import {
 import { router } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
 import { Button, Input, Card, colors, spacing } from '@shared/components';
-import { partnerApi } from '@shared/api';
-import { useAuthStore } from '@shared/stores';
+import { partnerApi, setAuthToken } from '@shared/api';
+import { useAuth } from '@shared/hooks';
 
 type PartnerType = 'affiliate' | 'supplier';
 
 export default function LoginScreen() {
-  const { setPartner, setToken } = useAuthStore();
+  const { saveAuth } = useAuth();
   const [partnerType, setPartnerType] = useState<PartnerType>('supplier');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -32,15 +32,20 @@ export default function LoginScreen() {
     }
 
     setLoading(true);
-    const response = await partnerApi.login(email, password, partnerType);
-    setLoading(false);
+    try {
+      const response = await partnerApi.login(email.toLowerCase().trim(), password, partnerType);
 
-    if (response.success && response.data) {
-      setPartner(response.data.user);
-      setToken(response.data.token);
-      router.replace('/(tabs)');
-    } else {
-      Alert.alert('Login Failed', response.error || 'Invalid credentials');
+      if (response.success && response.data) {
+        await saveAuth('partner', response.data.user, response.data.token);
+        setAuthToken(response.data.token);
+        router.replace('/(tabs)');
+      } else {
+        Alert.alert('Login Failed', response.error || 'Invalid credentials');
+      }
+    } catch (error) {
+      Alert.alert('Error', 'Unable to connect. Please try again.');
+    } finally {
+      setLoading(false);
     }
   };
 
