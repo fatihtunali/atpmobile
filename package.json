@@ -26,12 +26,16 @@
     "format": "prettier --write ."
   },
   "devDependencies": {
-    "@types/react": "~18.2.45",
+    "@types/react": "~19.1.10",
     "eslint": "^8.57.0",
     "prettier": "^3.2.5",
     "typescript": "^5.3.3"
   },
   "engines": {
     "node": ">=18.0.0"
+  },
+  "dependencies": {
+    "promise": "^8.3.0",
+    "webidl-conversions": "^8.0.0"
   }
 }

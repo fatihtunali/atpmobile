@@ -18,7 +18,7 @@
     "ios": {
       "supportsTablet": false,
       "bundleIdentifier": "com.airporttransferportal.driver",
-      "buildNumber": "3",
+      "buildNumber": "4",
       "infoPlist": {
         "NSLocationWhenInUseUsageDescription": "We need your location to show your position to customers and navigate to pickups.",
         "NSLocationAlwaysAndWhenInUseUsageDescription": "We need your location to track your position during rides, even when the app is in the background.",
