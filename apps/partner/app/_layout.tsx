@@ -45,6 +45,7 @@ export default function RootLayout() {
           name="resources/vehicles"
           options={{ title: 'Vehicles', headerBackTitle: 'Back' }}
         />
+        <Stack.Screen name="+not-found" />
       </Stack>
     </>
   );

@@ -41,6 +41,7 @@ export default function RootLayout() {
           name="ride/active"
           options={{ title: 'Active Ride', headerBackVisible: false }}
         />
+        <Stack.Screen name="+not-found" />
       </Stack>
     </>
   );

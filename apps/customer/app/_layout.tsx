@@ -53,6 +53,7 @@ export default function RootLayout() {
           name="tracking/[code]"
           options={{ title: 'Track Your Ride', presentation: 'fullScreenModal', headerBackTitle: 'Back' }}
         />
+        <Stack.Screen name="+not-found" />
       </Stack>
     </>
   );
