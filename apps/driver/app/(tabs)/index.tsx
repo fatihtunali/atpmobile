@@ -43,7 +43,7 @@ export default function RidesScreen() {
 
   const toggleOnline = async () => {
     const newStatus = !isOnline;
-    const response = await driverApi.setOnlineStatus(newStatus);
+    const response = await driverApi.setAvailability(newStatus);
     if (response.success) {
       setOnline(newStatus);
     }
