@@ -269,8 +269,9 @@ export default function HomeScreen() {
   };
 
   return (
-    <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
-      {/* Hero Section */}
+    <View style={styles.wrapper}>
+      <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
+        {/* Hero Section */}
       <View style={styles.hero}>
         <Text style={styles.heroTitle}>Book Your Airport Transfer</Text>
         <Text style={styles.heroSubtitle}>
@@ -477,6 +478,7 @@ export default function HomeScreen() {
           <Text style={styles.featureText}>Flight monitoring</Text>
         </View>
       </View>
+      </ScrollView>
 
       {/* Airport Search Modal */}
       <Modal
@@ -753,14 +755,17 @@ export default function HomeScreen() {
           onChange={handleTimeChange}
         />
       )}
-    </ScrollView>
+    </View>
   );
 }
 
 const styles = StyleSheet.create({
-  container: {
+  wrapper: {
     flex: 1,
     backgroundColor: colors.background,
+  },
+  container: {
+    flex: 1,
   },
   hero: {
     padding: spacing.lg,
