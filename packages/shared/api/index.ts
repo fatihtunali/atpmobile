@@ -378,12 +378,45 @@ export const partnerApi = {
 // Common API
 // ============================================
 
+interface PlacePrediction {
+  placeId: string;
+  description: string;
+  mainText: string;
+  secondaryText: string;
+  types: string[];
+}
+
+interface PlaceDetails {
+  placeId: string;
+  name: string;
+  address: string;
+  latitude: number;
+  longitude: number;
+  city: string;
+  country: string;
+}
+
 export const commonApi = {
   // Airports
   getAirports: (search?: string) =>
     apiRequest<{ id: number; code: string; name: string; city: string; country: string }[]>(
       `/api/mobile/airports${search ? `?search=${encodeURIComponent(search)}` : ''}`
     ),
+
+  // Google Places
+  searchPlaces: (input: string, sessionToken?: string) => {
+    const params = new URLSearchParams({ input });
+    if (sessionToken) params.append('sessionToken', sessionToken);
+    return apiRequest<{ predictions: PlacePrediction[] }>(
+      `/api/public/places/autocomplete?${params}`
+    );
+  },
+
+  getPlaceDetails: (placeId: string, sessionToken?: string) => {
+    const params = new URLSearchParams({ placeId });
+    if (sessionToken) params.append('sessionToken', sessionToken);
+    return apiRequest<PlaceDetails>(`/api/public/places/details?${params}`);
+  },
 
   // Notifications
   registerPushToken: (token: string, platform: 'ios' | 'android') =>

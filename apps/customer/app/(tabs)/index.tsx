@@ -27,6 +27,13 @@ interface Airport {
   country: string;
 }
 
+interface PlacePrediction {
+  placeId: string;
+  description: string;
+  mainText: string;
+  secondaryText: string;
+}
+
 export default function HomeScreen() {
   const {
     pickupType,
@@ -62,10 +69,13 @@ export default function HomeScreen() {
   const [showTimePicker, setShowTimePicker] = useState(false);
   const [showPassengerPicker, setShowPassengerPicker] = useState(false);
 
-  // Address modal state
+  // Address modal state with Google Places
   const [addressModalVisible, setAddressModalVisible] = useState(false);
   const [addressModalType, setAddressModalType] = useState<'pickup' | 'dropoff'>('pickup');
   const [addressInput, setAddressInput] = useState('');
+  const [placePredictions, setPlacePredictions] = useState<PlacePrediction[]>([]);
+  const [loadingPlaces, setLoadingPlaces] = useState(false);
+  const [sessionToken] = useState(() => Math.random().toString(36).substring(7));
 
   // Search airports
   useEffect(() => {
@@ -73,6 +83,22 @@ export default function HomeScreen() {
       searchAirports(airportSearch);
     }
   }, [airportSearch, airportModalVisible]);
+
+  // Search places with debounce
+  useEffect(() => {
+    if (!addressModalVisible) return;
+
+    if (addressInput.length < 3) {
+      setPlacePredictions([]);
+      return;
+    }
+
+    const timer = setTimeout(() => {
+      searchPlaces(addressInput);
+    }, 300);
+
+    return () => clearTimeout(timer);
+  }, [addressInput, addressModalVisible]);
 
   const searchAirports = async (query: string) => {
     setLoadingAirports(true);
@@ -85,6 +111,20 @@ export default function HomeScreen() {
       console.error('Failed to search airports:', error);
     } finally {
       setLoadingAirports(false);
+    }
+  };
+
+  const searchPlaces = async (query: string) => {
+    setLoadingPlaces(true);
+    try {
+      const response = await commonApi.searchPlaces(query, sessionToken);
+      if (response.success && response.data) {
+        setPlacePredictions(response.data.predictions || []);
+      }
+    } catch (error) {
+      console.error('Failed to search places:', error);
+    } finally {
+      setLoadingPlaces(false);
     }
   };
 
@@ -105,17 +145,33 @@ export default function HomeScreen() {
 
   const openAddressModal = (type: 'pickup' | 'dropoff') => {
     setAddressModalType(type);
-    setAddressInput(type === 'pickup' ? pickupAddress : dropoffAddress);
+    setAddressInput('');
+    setPlacePredictions([]);
     setAddressModalVisible(true);
   };
 
-  const saveAddress = () => {
-    if (addressModalType === 'pickup') {
-      setPickupAddress(addressInput);
-    } else {
-      setDropoffAddress(addressInput);
+  const selectPlace = async (prediction: PlacePrediction) => {
+    try {
+      const response = await commonApi.getPlaceDetails(prediction.placeId, sessionToken);
+      if (response.success && response.data) {
+        const { address, latitude, longitude } = response.data;
+        if (addressModalType === 'pickup') {
+          setPickupAddress(address, { lat: latitude, lng: longitude });
+        } else {
+          setDropoffAddress(address, { lat: latitude, lng: longitude });
+        }
+        setAddressModalVisible(false);
+      }
+    } catch (error) {
+      console.error('Failed to get place details:', error);
+      // Fallback to using the description
+      if (addressModalType === 'pickup') {
+        setPickupAddress(prediction.description);
+      } else {
+        setDropoffAddress(prediction.description);
+      }
+      setAddressModalVisible(false);
     }
-    setAddressModalVisible(false);
   };
 
   const handleLocationPress = (type: 'pickup' | 'dropoff') => {
@@ -447,7 +503,7 @@ export default function HomeScreen() {
         </View>
       </Modal>
 
-      {/* Address Modal */}
+      {/* Address Modal with Google Places */}
       <Modal
         visible={addressModalVisible}
         animationType="slide"
@@ -457,27 +513,67 @@ export default function HomeScreen() {
         <View style={styles.modalContainer}>
           <View style={styles.modalHeader}>
             <Text style={styles.modalTitle}>
-              Enter {addressModalType === 'pickup' ? 'Pickup' : 'Dropoff'} Address
+              Search {addressModalType === 'pickup' ? 'Pickup' : 'Dropoff'} Address
             </Text>
             <TouchableOpacity onPress={() => setAddressModalVisible(false)}>
               <Ionicons name="close" size={24} color={colors.text} />
             </TouchableOpacity>
           </View>
 
-          <View style={styles.addressInputContainer}>
+          <View style={styles.searchInputContainer}>
+            <Ionicons name="search" size={20} color={colors.textMuted} />
             <TextInput
-              style={styles.addressInput}
-              placeholder="Enter full address..."
+              style={styles.searchInput}
+              placeholder="Search for a location..."
               placeholderTextColor={colors.textMuted}
               value={addressInput}
               onChangeText={setAddressInput}
-              multiline
               autoFocus
             />
+            {addressInput.length > 0 && (
+              <TouchableOpacity onPress={() => setAddressInput('')}>
+                <Ionicons name="close-circle" size={20} color={colors.textMuted} />
+              </TouchableOpacity>
+            )}
           </View>
 
-          <View style={styles.addressButtons}>
-            <Button title="Save Address" onPress={saveAddress} fullWidth />
+          {loadingPlaces ? (
+            <View style={styles.loadingContainer}>
+              <Loading />
+            </View>
+          ) : (
+            <FlatList
+              data={placePredictions}
+              keyExtractor={(item) => item.placeId}
+              renderItem={({ item }) => (
+                <TouchableOpacity
+                  style={styles.placeItem}
+                  onPress={() => selectPlace(item)}
+                >
+                  <View style={styles.placeIcon}>
+                    <Ionicons name="location" size={20} color={colors.primary} />
+                  </View>
+                  <View style={styles.placeInfo}>
+                    <Text style={styles.placeMainText}>{item.mainText}</Text>
+                    <Text style={styles.placeSecondaryText}>{item.secondaryText}</Text>
+                  </View>
+                </TouchableOpacity>
+              )}
+              ListEmptyComponent={
+                <View style={styles.emptyPlaces}>
+                  <Ionicons name="location-outline" size={48} color={colors.border} />
+                  <Text style={styles.emptyText}>
+                    {addressInput.length < 3
+                      ? 'Type at least 3 characters to search'
+                      : 'No locations found'}
+                  </Text>
+                </View>
+              }
+            />
+          )}
+
+          <View style={styles.poweredByGoogle}>
+            <Text style={styles.poweredByText}>Powered by Google</Text>
           </View>
         </View>
       </Modal>
@@ -773,22 +869,50 @@ const styles = StyleSheet.create({
     marginTop: spacing.xl,
   },
   // Address modal styles
-  addressInputContainer: {
-    margin: spacing.md,
+  // Place item styles for Google Places
+  placeItem: {
+    flexDirection: 'row',
+    alignItems: 'center',
     padding: spacing.md,
-    backgroundColor: colors.surface,
-    borderRadius: 12,
-    borderWidth: 1,
-    borderColor: colors.border,
+    borderBottomWidth: 1,
+    borderBottomColor: colors.border,
   },
-  addressInput: {
-    fontSize: 16,
+  placeIcon: {
+    width: 40,
+    height: 40,
+    borderRadius: 20,
+    backgroundColor: `${colors.primary}15`,
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginRight: spacing.md,
+  },
+  placeInfo: {
+    flex: 1,
+  },
+  placeMainText: {
+    fontSize: 15,
+    fontWeight: '600',
     color: colors.text,
-    minHeight: 100,
-    textAlignVertical: 'top',
   },
-  addressButtons: {
+  placeSecondaryText: {
+    fontSize: 13,
+    color: colors.textSecondary,
+    marginTop: 2,
+  },
+  emptyPlaces: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    paddingVertical: spacing.xl * 2,
+  },
+  poweredByGoogle: {
     padding: spacing.md,
+    borderTopWidth: 1,
+    borderTopColor: colors.border,
+    alignItems: 'center',
+  },
+  poweredByText: {
+    fontSize: 12,
+    color: colors.textMuted,
   },
   // Passenger picker styles
   pickerOverlay: {
