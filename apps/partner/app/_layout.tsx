@@ -35,15 +35,15 @@ export default function RootLayout() {
         <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
         <Stack.Screen
           name="bookings/[id]"
-          options={{ title: 'Booking Details', presentation: 'card' }}
+          options={{ title: 'Booking Details', presentation: 'card', headerBackTitle: 'Back' }}
         />
         <Stack.Screen
           name="resources/drivers"
-          options={{ title: 'Drivers' }}
+          options={{ title: 'Drivers', headerBackTitle: 'Back' }}
         />
         <Stack.Screen
           name="resources/vehicles"
-          options={{ title: 'Vehicles' }}
+          options={{ title: 'Vehicles', headerBackTitle: 'Back' }}
         />
       </Stack>
     </>

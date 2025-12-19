@@ -35,7 +35,7 @@ export default function RootLayout() {
         <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
         <Stack.Screen
           name="ride/[id]"
-          options={{ title: 'Ride Details', presentation: 'card' }}
+          options={{ title: 'Ride Details', presentation: 'card', headerBackTitle: 'Back' }}
         />
         <Stack.Screen
           name="ride/active"

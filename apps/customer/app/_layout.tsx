@@ -35,15 +35,15 @@ export default function RootLayout() {
         <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
         <Stack.Screen
           name="search/results"
-          options={{ title: 'Select Vehicle', presentation: 'card' }}
+          options={{ title: 'Select Vehicle', presentation: 'card', headerBackTitle: 'Back' }}
         />
         <Stack.Screen
           name="booking/details"
-          options={{ title: 'Booking Details', presentation: 'card' }}
+          options={{ title: 'Booking Details', presentation: 'card', headerBackTitle: 'Back' }}
         />
         <Stack.Screen
           name="booking/payment"
-          options={{ title: 'Payment', presentation: 'card' }}
+          options={{ title: 'Payment', presentation: 'card', headerBackTitle: 'Back' }}
         />
         <Stack.Screen
           name="booking/confirmation"
@@ -51,7 +51,7 @@ export default function RootLayout() {
         />
         <Stack.Screen
           name="tracking/[code]"
-          options={{ title: 'Track Your Ride', presentation: 'fullScreenModal' }}
+          options={{ title: 'Track Your Ride', presentation: 'fullScreenModal', headerBackTitle: 'Back' }}
         />
       </Stack>
     </>
