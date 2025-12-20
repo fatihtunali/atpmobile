@@ -14,6 +14,28 @@ import type {
   PaymentMethodType,
 } from '@shared/types';
 
+// Response types for API calls
+interface PaymentIntentResponse {
+  clientSecret?: string;
+  bankDetails?: {
+    bankName: string;
+    iban: string;
+    accountName: string;
+    reference: string;
+  };
+  cryptoAddress?: string;
+  cryptoCurrency?: string;
+  paymentUrl?: string;
+}
+
+interface ConvertGuestResponse {
+  success: boolean;
+  customerId?: number;
+  isNewUser?: boolean;
+  accountExists?: boolean;
+  error?: string;
+}
+
 // ============================================
 // Configuration
 // ============================================
@@ -189,13 +211,14 @@ export const customerApi = {
     apiRequest<PaymentMethod[]>('/api/mobile/customer/payment-methods'),
 
   createPaymentIntent: (bookingCode: string, paymentMethod: PaymentMethodType) =>
-    apiRequest<{ clientSecret?: string; bankDetails?: { bankName: string; iban: string; accountName: string; reference: string }; cryptoAddress?: string; cryptoCurrency?: string; paymentUrl?: string }>(`/api/public/payments`, {
+    apiRequest<PaymentIntentResponse>('/api/public/payments', {
       method: 'POST',
       body: JSON.stringify({ bookingCode, paymentMethod }),
+    }),
 
   // Convert guest booking to customer account
   convertGuest: (data: { bookingCode: string; email: string; password: string; name?: string; linkToExisting?: boolean }) =>
-    apiRequest<{ success: boolean; customerId?: number; isNewUser?: boolean; accountExists?: boolean; error?: string }>('/api/customer/convert-guest', {
+    apiRequest<ConvertGuestResponse>('/api/customer/convert-guest', {
       method: 'POST',
       body: JSON.stringify(data),
     }),

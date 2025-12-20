@@ -37,7 +37,8 @@ export default function ProcessPaymentScreen() {
     paymentUrl?: string;
   } | null>(null);
   const [copied, setCopied] = useState<string | null>(null);
-  const [paymentCompleted, setPaymentCompleted] = useState(false);
+  const [verifying, setVerifying] = useState(false);
+  const [verificationError, setVerificationError] = useState<string | null>(null);
 
   useEffect(() => {
     initializePayment();
@@ -95,12 +96,44 @@ export default function ProcessPaymentScreen() {
     setTimeout(() => setCopied(null), 2000);
   };
 
-  const handlePaymentComplete = () => {
-    searchStore.reset();
-    router.replace({
-      pathname: '/booking/confirmation',
-      params: { bookingCode, email: customerEmail, name: customerName },
-    });
+  const handlePaymentComplete = async () => {
+    setVerifying(true);
+    setVerificationError(null);
+
+    try {
+      // Verify payment status from backend
+      const response = await customerApi.getBooking(bookingCode, customerEmail);
+
+      if (response.success && response.data) {
+        const booking = response.data;
+
+        // Check if payment is confirmed
+        if (
+          booking.paymentStatus === 'PAID' ||
+          booking.paymentStatus === 'COMPLETED' ||
+          booking.status === 'CONFIRMED' ||
+          booking.status === 'DRIVER_ASSIGNED'
+        ) {
+          // Payment verified - proceed to confirmation
+          searchStore.reset();
+          router.replace({
+            pathname: '/booking/confirmation',
+            params: { bookingCode, email: customerEmail, name: customerName },
+          });
+        } else {
+          // Payment not yet received
+          setVerificationError(
+            'Payment not yet received. Please complete the payment and try again. It may take a few moments to process.'
+          );
+        }
+      } else {
+        setVerificationError('Unable to verify payment. Please try again.');
+      }
+    } catch (error) {
+      setVerificationError('Failed to verify payment. Please try again.');
+    } finally {
+      setVerifying(false);
+    }
   };
 
   const handleOpenPaymentPage = () => {
@@ -255,11 +288,19 @@ export default function ProcessPaymentScreen() {
 
       {/* Complete Button */}
       <View style={styles.buttonContainer}>
+        {verificationError && (
+          <View style={styles.errorContainer}>
+            <Ionicons name="alert-circle" size={20} color={colors.error} />
+            <Text style={styles.errorText}>{verificationError}</Text>
+          </View>
+        )}
         <Button
-          title="I've Completed Payment"
+          title={verifying ? 'Verifying Payment...' : "I've Completed Payment"}
           onPress={handlePaymentComplete}
           fullWidth
           size="lg"
+          loading={verifying}
+          disabled={verifying}
         />
         <Text style={styles.helperText}>
           Your booking will be confirmed once payment is verified.
@@ -387,6 +428,20 @@ const styles = StyleSheet.create({
   buttonContainer: {
     padding: spacing.md,
     paddingBottom: spacing.xl,
+  },
+  errorContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    backgroundColor: `${colors.error}15`,
+    padding: spacing.md,
+    borderRadius: 8,
+    marginBottom: spacing.md,
+  },
+  errorText: {
+    flex: 1,
+    marginLeft: spacing.sm,
+    fontSize: scaleFontSize(13),
+    color: colors.error,
   },
   helperText: {
     marginTop: spacing.sm,
