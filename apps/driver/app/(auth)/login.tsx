@@ -14,6 +14,7 @@ import { Ionicons } from '@expo/vector-icons';
 import { Button, Input, colors, spacing } from '@shared/components';
 import { driverApi } from '@shared/api';
 import { useAuth } from '@shared/hooks';
+import { scale, verticalScale, scaleFontSize } from '@shared/utils/responsive';
 
 export default function DriverLoginScreen() {
   const { saveAuth } = useAuth();
@@ -150,22 +151,22 @@ const styles = StyleSheet.create({
     marginBottom: spacing.xl,
   },
   logoContainer: {
-    width: 80,
-    height: 80,
-    borderRadius: 40,
+    width: scale(80),
+    height: verticalScale(80),
+    borderRadius: scale(40),
     backgroundColor: `${colors.primary}15`,
     justifyContent: 'center',
     alignItems: 'center',
     marginBottom: spacing.md,
   },
   title: {
-    fontSize: 28,
+    fontSize: scaleFontSize(28),
     fontWeight: '700',
     color: colors.text,
     marginBottom: spacing.xs,
   },
   subtitle: {
-    fontSize: 16,
+    fontSize: scaleFontSize(16),
     color: colors.textSecondary,
     textAlign: 'center',
   },
@@ -178,7 +179,7 @@ const styles = StyleSheet.create({
   },
   forgotPasswordText: {
     color: colors.primary,
-    fontSize: 14,
+    fontSize: scaleFontSize(14),
     fontWeight: '500',
   },
   loginButton: {
@@ -189,13 +190,13 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     backgroundColor: `${colors.primary}10`,
     padding: spacing.md,
-    borderRadius: 12,
+    borderRadius: scale(12),
   },
   infoText: {
     flex: 1,
     marginLeft: spacing.sm,
-    fontSize: 14,
+    fontSize: scaleFontSize(14),
     color: colors.textSecondary,
-    lineHeight: 20,
+    lineHeight: verticalScale(20),
   },
 });

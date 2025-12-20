@@ -11,7 +11,7 @@ import { useLocalSearchParams, router } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
 import { Card, Badge, Button, Loading, Divider, colors, spacing } from '@shared/components';
 import { partnerApi } from '@shared/api';
-import { formatCurrency, formatDate, getBookingStatusLabel, openMapsNavigation } from '@shared/utils';
+import { formatCurrency, formatDate, getBookingStatusLabel, openMapsNavigation, scale, verticalScale, scaleFontSize } from '@shared/utils';
 import { useAuthStore } from '@shared/stores';
 import type { Booking } from '@shared/types';
 
@@ -335,7 +335,7 @@ const styles = StyleSheet.create({
     padding: spacing.xl,
   },
   errorText: {
-    fontSize: 18,
+    fontSize: scaleFontSize(18),
     color: colors.text,
     marginVertical: spacing.lg,
   },
@@ -347,7 +347,7 @@ const styles = StyleSheet.create({
     backgroundColor: colors.surface,
   },
   bookingCode: {
-    fontSize: 16,
+    fontSize: scaleFontSize(16),
     fontFamily: 'monospace',
     fontWeight: '600',
     color: colors.text,
@@ -361,28 +361,28 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   dot: {
-    width: 12,
-    height: 12,
-    borderRadius: 6,
+    width: scale(12),
+    height: verticalScale(12),
+    borderRadius: scale(6),
     marginRight: spacing.md,
   },
   routeInfo: {
     flex: 1,
   },
   routeLabel: {
-    fontSize: 12,
+    fontSize: scaleFontSize(12),
     color: colors.textMuted,
   },
   routeAddress: {
-    fontSize: 15,
+    fontSize: scaleFontSize(15),
     fontWeight: '500',
     color: colors.text,
   },
   routeLine: {
-    width: 2,
-    height: 30,
+    width: scale(2),
+    height: verticalScale(30),
     backgroundColor: colors.border,
-    marginLeft: 5,
+    marginLeft: scale(5),
     marginVertical: spacing.sm,
   },
   detailsCard: {
@@ -391,7 +391,7 @@ const styles = StyleSheet.create({
     padding: spacing.lg,
   },
   sectionTitle: {
-    fontSize: 16,
+    fontSize: scaleFontSize(16),
     fontWeight: '600',
     color: colors.text,
     marginBottom: spacing.md,
@@ -408,11 +408,11 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   detailLabel: {
-    fontSize: 12,
+    fontSize: scaleFontSize(12),
     color: colors.textMuted,
   },
   detailValue: {
-    fontSize: 14,
+    fontSize: scaleFontSize(14),
     fontWeight: '500',
     color: colors.text,
   },
@@ -422,7 +422,7 @@ const styles = StyleSheet.create({
     padding: spacing.lg,
   },
   customerName: {
-    fontSize: 18,
+    fontSize: scaleFontSize(18),
     fontWeight: '600',
     color: colors.text,
     marginBottom: spacing.md,
@@ -438,15 +438,15 @@ const styles = StyleSheet.create({
     marginTop: spacing.md,
     padding: spacing.md,
     backgroundColor: colors.background,
-    borderRadius: 8,
+    borderRadius: scale(8),
   },
   notesLabel: {
-    fontSize: 12,
+    fontSize: scaleFontSize(12),
     color: colors.textMuted,
-    marginBottom: 4,
+    marginBottom: verticalScale(4),
   },
   notesText: {
-    fontSize: 14,
+    fontSize: scaleFontSize(14),
     color: colors.text,
   },
   driverCard: {
@@ -459,9 +459,9 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   driverAvatar: {
-    width: 50,
-    height: 50,
-    borderRadius: 25,
+    width: scale(50),
+    height: verticalScale(50),
+    borderRadius: scale(25),
     backgroundColor: colors.primaryLight,
     alignItems: 'center',
     justifyContent: 'center',
@@ -471,18 +471,18 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   driverName: {
-    fontSize: 16,
+    fontSize: scaleFontSize(16),
     fontWeight: '600',
     color: colors.text,
   },
   driverPhone: {
-    fontSize: 14,
+    fontSize: scaleFontSize(14),
     color: colors.textMuted,
   },
   vehiclePlate: {
-    fontSize: 12,
+    fontSize: scaleFontSize(12),
     color: colors.textMuted,
-    marginTop: 2,
+    marginTop: verticalScale(2),
   },
   priceCard: {
     margin: spacing.md,
@@ -496,11 +496,11 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   priceLabel: {
-    fontSize: 16,
+    fontSize: scaleFontSize(16),
     color: colors.text,
   },
   priceValue: {
-    fontSize: 24,
+    fontSize: scaleFontSize(24),
     fontWeight: '700',
     color: colors.primary,
   },

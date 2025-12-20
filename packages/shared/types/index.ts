@@ -81,6 +81,19 @@ export type PaymentStatus =
   | 'REFUNDED'
   | 'FAILED';
 
+export type PaymentMethodType = 'CARD' | 'BANK_TRANSFER' | 'CRYPTO';
+
+export interface PaymentMethod {
+  id: PaymentMethodType;
+  title: string;
+  subtitle: string;
+  icon: string;
+  isEnabled: boolean;
+  processingFee?: number;
+  minAmount?: number;
+  maxAmount?: number;
+}
+
 export interface Location {
   name: string;
   address: string;
@@ -196,6 +209,9 @@ export interface SearchResult {
   duration: number; // minutes
   distance: number; // km
   features: string[];
+  airportId?: number;
+  zoneId?: number;
+  routeId?: number;
 }
 
 // ============================================

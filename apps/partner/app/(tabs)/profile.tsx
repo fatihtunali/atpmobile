@@ -4,6 +4,7 @@ import { router } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
 import { Card, Badge, Button, colors, spacing } from '@shared/components';
 import { useAuthStore } from '@shared/stores';
+import { scale, verticalScale, scaleFontSize } from '@shared/utils/responsive';
 
 interface MenuItem {
   icon: string;
@@ -225,7 +226,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     padding: spacing.xl,
     backgroundColor: colors.surface,
-    borderBottomWidth: 1,
+    borderBottomWidth: scale(1),
     borderBottomColor: colors.border,
   },
   avatarContainer: {
@@ -233,42 +234,42 @@ const styles = StyleSheet.create({
     marginBottom: spacing.md,
   },
   avatar: {
-    width: 80,
-    height: 80,
-    borderRadius: 40,
+    width: scale(80),
+    height: verticalScale(80),
+    borderRadius: scale(40),
     backgroundColor: colors.primaryLight,
     alignItems: 'center',
     justifyContent: 'center',
     marginBottom: spacing.sm,
   },
   companyName: {
-    fontSize: 22,
+    fontSize: scaleFontSize(22),
     fontWeight: '700',
     color: colors.text,
-    marginBottom: 4,
+    marginBottom: verticalScale(4),
   },
   contactName: {
-    fontSize: 16,
+    fontSize: scaleFontSize(16),
     color: colors.text,
-    marginBottom: 2,
+    marginBottom: verticalScale(2),
   },
   email: {
-    fontSize: 14,
+    fontSize: scaleFontSize(14),
     color: colors.textMuted,
   },
   affiliateCodeContainer: {
     marginTop: spacing.md,
     padding: spacing.sm,
     backgroundColor: colors.primaryLight,
-    borderRadius: 8,
+    borderRadius: scale(8),
     alignItems: 'center',
   },
   affiliateCodeLabel: {
-    fontSize: 12,
+    fontSize: scaleFontSize(12),
     color: colors.textMuted,
   },
   affiliateCode: {
-    fontSize: 18,
+    fontSize: scaleFontSize(18),
     fontWeight: '700',
     color: colors.primary,
     fontFamily: 'monospace',
@@ -277,10 +278,10 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     marginTop: spacing.md,
-    gap: 4,
+    gap: scale(4),
   },
   ratingText: {
-    fontSize: 16,
+    fontSize: scaleFontSize(16),
     fontWeight: '600',
     color: colors.text,
   },
@@ -290,11 +291,11 @@ const styles = StyleSheet.create({
     marginTop: spacing.md,
     padding: spacing.sm,
     backgroundColor: 'rgba(255, 152, 0, 0.1)',
-    borderRadius: 8,
+    borderRadius: scale(8),
     gap: spacing.sm,
   },
   verificationText: {
-    fontSize: 13,
+    fontSize: scaleFontSize(13),
     color: colors.warning,
     fontWeight: '500',
   },
@@ -309,14 +310,14 @@ const styles = StyleSheet.create({
     padding: spacing.md,
   },
   statValue: {
-    fontSize: 24,
+    fontSize: scaleFontSize(24),
     fontWeight: '700',
     color: colors.primary,
   },
   statLabel: {
-    fontSize: 12,
+    fontSize: scaleFontSize(12),
     color: colors.textMuted,
-    marginTop: 4,
+    marginTop: verticalScale(4),
   },
   menuContainer: {
     padding: spacing.md,
@@ -336,16 +337,16 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   menuIconContainer: {
-    width: 36,
-    height: 36,
-    borderRadius: 8,
+    width: scale(36),
+    height: verticalScale(36),
+    borderRadius: scale(8),
     backgroundColor: colors.primaryLight,
     alignItems: 'center',
     justifyContent: 'center',
     marginRight: spacing.md,
   },
   menuItemLabel: {
-    fontSize: 15,
+    fontSize: scaleFontSize(15),
     fontWeight: '500',
     color: colors.text,
   },
@@ -361,7 +362,7 @@ const styles = StyleSheet.create({
   },
   versionText: {
     textAlign: 'center',
-    fontSize: 12,
+    fontSize: scaleFontSize(12),
     color: colors.textMuted,
     paddingBottom: spacing.xl,
   },

@@ -12,6 +12,7 @@ import { Ionicons } from '@expo/vector-icons';
 import { Card, Badge, Loading, colors, spacing } from '@shared/components';
 import { customerApi } from '@shared/api';
 import { useBookingsStore } from '@shared/stores';
+import { scale, verticalScale, scaleFontSize } from '@shared/utils/responsive';
 import {
   formatDate,
   formatTime,
@@ -193,7 +194,7 @@ const styles = StyleSheet.create({
     borderBottomColor: colors.primary,
   },
   tabText: {
-    fontSize: 15,
+    fontSize: scaleFontSize(15),
     fontWeight: '500',
     color: colors.textMuted,
   },
@@ -215,7 +216,7 @@ const styles = StyleSheet.create({
     marginBottom: spacing.md,
   },
   bookingCode: {
-    fontSize: 12,
+    fontSize: scaleFontSize(12),
     fontFamily: 'monospace',
     color: colors.textMuted,
   },
@@ -227,33 +228,33 @@ const styles = StyleSheet.create({
     alignItems: 'flex-start',
   },
   routeDot: {
-    width: 12,
-    height: 12,
-    borderRadius: 6,
+    width: scale(12),
+    height: scale(12),
+    borderRadius: scale(6),
     backgroundColor: colors.primary,
     marginRight: spacing.sm,
-    marginTop: 4,
+    marginTop: scale(4),
   },
   routeDotEnd: {
     backgroundColor: colors.secondary,
   },
   routeLine: {
-    width: 2,
-    height: 20,
+    width: scale(2),
+    height: verticalScale(20),
     backgroundColor: colors.border,
-    marginLeft: 5,
-    marginVertical: 2,
+    marginLeft: scale(5),
+    marginVertical: scale(2),
   },
   routeInfo: {
     flex: 1,
   },
   routeLabel: {
-    fontSize: 11,
+    fontSize: scaleFontSize(11),
     color: colors.textMuted,
-    marginBottom: 2,
+    marginBottom: scale(2),
   },
   routeText: {
-    fontSize: 14,
+    fontSize: scaleFontSize(14),
     color: colors.text,
     fontWeight: '500',
   },
@@ -270,13 +271,13 @@ const styles = StyleSheet.create({
     marginRight: spacing.md,
   },
   bookingDetailText: {
-    marginLeft: 4,
-    fontSize: 13,
+    marginLeft: scale(4),
+    fontSize: scaleFontSize(13),
     color: colors.textSecondary,
   },
   bookingPrice: {
     marginLeft: 'auto',
-    fontSize: 16,
+    fontSize: scaleFontSize(16),
     fontWeight: '700',
     color: colors.primary,
   },
@@ -287,14 +288,14 @@ const styles = StyleSheet.create({
     paddingVertical: spacing.xl * 2,
   },
   emptyTitle: {
-    fontSize: 18,
+    fontSize: scaleFontSize(18),
     fontWeight: '600',
     color: colors.text,
     marginTop: spacing.md,
     marginBottom: spacing.xs,
   },
   emptyText: {
-    fontSize: 14,
+    fontSize: scaleFontSize(14),
     color: colors.textMuted,
     textAlign: 'center',
   },

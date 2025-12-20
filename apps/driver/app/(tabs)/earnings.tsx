@@ -11,6 +11,7 @@ import { Ionicons } from '@expo/vector-icons';
 import { Card, Loading, colors, spacing } from '@shared/components';
 import { driverApi } from '@shared/api';
 import { formatCurrency, formatDate } from '@shared/utils';
+import { scale, verticalScale, scaleFontSize } from '@shared/utils/responsive';
 import type { EarningsSummary, EarningsTransaction } from '@shared/types';
 
 export default function EarningsScreen() {
@@ -173,12 +174,12 @@ const styles = StyleSheet.create({
     marginBottom: spacing.md,
   },
   mainCardLabel: {
-    fontSize: 14,
+    fontSize: scaleFontSize(14),
     color: 'rgba(255,255,255,0.8)',
     marginBottom: spacing.xs,
   },
   mainCardValue: {
-    fontSize: 36,
+    fontSize: scaleFontSize(36),
     fontWeight: '700',
     color: '#fff',
   },
@@ -193,12 +194,12 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   statValue: {
-    fontSize: 24,
+    fontSize: scaleFontSize(24),
     fontWeight: '700',
     color: '#fff',
   },
   statLabel: {
-    fontSize: 12,
+    fontSize: scaleFontSize(12),
     color: 'rgba(255,255,255,0.8)',
   },
   statsRow: {
@@ -211,12 +212,12 @@ const styles = StyleSheet.create({
     padding: spacing.md,
   },
   statCardLabel: {
-    fontSize: 12,
+    fontSize: scaleFontSize(12),
     color: colors.textMuted,
     marginBottom: spacing.xs,
   },
   statCardValue: {
-    fontSize: 20,
+    fontSize: scaleFontSize(20),
     fontWeight: '700',
     color: colors.text,
   },
@@ -232,11 +233,11 @@ const styles = StyleSheet.create({
     marginLeft: spacing.md,
   },
   pendingLabel: {
-    fontSize: 12,
+    fontSize: scaleFontSize(12),
     color: '#92400e',
   },
   pendingValue: {
-    fontSize: 18,
+    fontSize: scaleFontSize(18),
     fontWeight: '700',
     color: '#92400e',
   },
@@ -244,7 +245,7 @@ const styles = StyleSheet.create({
     padding: spacing.md,
   },
   sectionTitle: {
-    fontSize: 18,
+    fontSize: scaleFontSize(18),
     fontWeight: '600',
     color: colors.text,
     marginBottom: spacing.md,
@@ -254,7 +255,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   emptyText: {
-    fontSize: 14,
+    fontSize: scaleFontSize(14),
     color: colors.textMuted,
   },
   transactionCard: {
@@ -264,9 +265,9 @@ const styles = StyleSheet.create({
     marginBottom: spacing.sm,
   },
   transactionIcon: {
-    width: 40,
-    height: 40,
-    borderRadius: 20,
+    width: scale(40),
+    height: verticalScale(40),
+    borderRadius: scale(20),
     backgroundColor: colors.background,
     justifyContent: 'center',
     alignItems: 'center',
@@ -276,17 +277,17 @@ const styles = StyleSheet.create({
     marginLeft: spacing.md,
   },
   transactionDescription: {
-    fontSize: 14,
+    fontSize: scaleFontSize(14),
     fontWeight: '500',
     color: colors.text,
   },
   transactionDate: {
-    fontSize: 12,
+    fontSize: scaleFontSize(12),
     color: colors.textMuted,
-    marginTop: 2,
+    marginTop: verticalScale(2),
   },
   transactionAmount: {
-    fontSize: 16,
+    fontSize: scaleFontSize(16),
     fontWeight: '700',
     color: colors.success,
   },

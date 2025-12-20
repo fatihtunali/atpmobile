@@ -12,6 +12,7 @@ import { Ionicons } from '@expo/vector-icons';
 import { Card, Button, colors, spacing } from '@shared/components';
 import { useAuth } from '@shared/hooks';
 import { getInitials } from '@shared/utils';
+import { scale, verticalScale, scaleFontSize } from '@shared/utils/responsive';
 
 export default function ProfileScreen() {
   const { isAuthenticated, customer, logout } = useAuth();
@@ -190,20 +191,20 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   guestTitle: {
-    fontSize: 20,
+    fontSize: scaleFontSize(20),
     fontWeight: '600',
     color: colors.text,
     marginTop: spacing.lg,
     marginBottom: spacing.sm,
   },
   guestText: {
-    fontSize: 14,
+    fontSize: scaleFontSize(14),
     color: colors.textMuted,
     textAlign: 'center',
-    lineHeight: 20,
+    lineHeight: scaleFontSize(20),
   },
   registerLink: {
-    fontSize: 14,
+    fontSize: scaleFontSize(14),
     color: colors.textSecondary,
   },
   registerLinkBold: {
@@ -216,41 +217,41 @@ const styles = StyleSheet.create({
     paddingHorizontal: spacing.lg,
   },
   avatar: {
-    width: 80,
-    height: 80,
-    borderRadius: 40,
+    width: scale(80),
+    height: scale(80),
+    borderRadius: scale(40),
     backgroundColor: colors.primary,
     justifyContent: 'center',
     alignItems: 'center',
     marginBottom: spacing.md,
   },
   avatarText: {
-    fontSize: 28,
+    fontSize: scaleFontSize(28),
     fontWeight: '700',
     color: '#fff',
   },
   name: {
-    fontSize: 22,
+    fontSize: scaleFontSize(22),
     fontWeight: '700',
     color: colors.text,
-    marginBottom: 4,
+    marginBottom: scale(4),
   },
   email: {
-    fontSize: 14,
+    fontSize: scaleFontSize(14),
     color: colors.textMuted,
   },
   pointsBadge: {
     flexDirection: 'row',
     alignItems: 'center',
     backgroundColor: '#fef3c7',
-    paddingVertical: 6,
-    paddingHorizontal: 12,
-    borderRadius: 20,
+    paddingVertical: verticalScale(6),
+    paddingHorizontal: scale(12),
+    borderRadius: scale(20),
     marginTop: spacing.md,
   },
   pointsText: {
-    marginLeft: 6,
-    fontSize: 14,
+    marginLeft: scale(6),
+    fontSize: scaleFontSize(14),
     fontWeight: '600',
     color: '#92400e',
   },
@@ -276,7 +277,7 @@ const styles = StyleSheet.create({
   menuItemText: {
     flex: 1,
     marginLeft: spacing.md,
-    fontSize: 15,
+    fontSize: scaleFontSize(15),
     color: colors.text,
   },
   menuItemTextDanger: {
@@ -284,7 +285,7 @@ const styles = StyleSheet.create({
   },
   version: {
     textAlign: 'center',
-    fontSize: 12,
+    fontSize: scaleFontSize(12),
     color: colors.textMuted,
     paddingBottom: spacing.xl,
   },

@@ -14,6 +14,7 @@ import { Button, Card, Loading, Badge, colors, spacing } from '@shared/component
 import { useSearchStore, useBookingsStore } from '@shared/stores';
 import { customerApi } from '@shared/api';
 import { formatCurrency, formatDuration, formatDate, formatTime } from '@shared/utils';
+import { scale, verticalScale, scaleFontSize } from '@shared/utils/responsive';
 import type { SearchResult } from '@shared/types';
 
 export default function SearchResultsScreen() {
@@ -247,9 +248,9 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   routeDot: {
-    width: 10,
-    height: 10,
-    borderRadius: 5,
+    width: scale(10),
+    height: scale(10),
+    borderRadius: scale(5),
     backgroundColor: colors.primary,
     marginRight: spacing.sm,
   },
@@ -257,15 +258,15 @@ const styles = StyleSheet.create({
     backgroundColor: colors.secondary,
   },
   routeLine: {
-    width: 2,
-    height: 20,
+    width: scale(2),
+    height: verticalScale(20),
     backgroundColor: colors.border,
-    marginLeft: 4,
-    marginVertical: 4,
+    marginLeft: scale(4),
+    marginVertical: scale(4),
   },
   routeText: {
     flex: 1,
-    fontSize: 14,
+    fontSize: scaleFontSize(14),
     color: colors.text,
   },
   tripDetails: {
@@ -280,14 +281,14 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   tripDetailText: {
-    marginLeft: 4,
-    fontSize: 13,
+    marginLeft: scale(4),
+    fontSize: scaleFontSize(13),
     color: colors.textSecondary,
   },
   resultsCount: {
     paddingHorizontal: spacing.md,
     paddingBottom: spacing.sm,
-    fontSize: 14,
+    fontSize: scaleFontSize(14),
     color: colors.textSecondary,
   },
   resultCard: {
@@ -301,9 +302,9 @@ const styles = StyleSheet.create({
     marginBottom: spacing.md,
   },
   vehicleIconContainer: {
-    width: 56,
-    height: 56,
-    borderRadius: 12,
+    width: scale(56),
+    height: scale(56),
+    borderRadius: scale(12),
     backgroundColor: `${colors.primary}15`,
     justifyContent: 'center',
     alignItems: 'center',
@@ -313,25 +314,25 @@ const styles = StyleSheet.create({
     marginLeft: spacing.md,
   },
   vehicleName: {
-    fontSize: 16,
+    fontSize: scaleFontSize(16),
     fontWeight: '600',
     color: colors.text,
   },
   vehicleDesc: {
-    fontSize: 13,
+    fontSize: scaleFontSize(13),
     color: colors.textSecondary,
-    marginTop: 2,
+    marginTop: scale(2),
   },
   priceContainer: {
     alignItems: 'flex-end',
   },
   price: {
-    fontSize: 20,
+    fontSize: scaleFontSize(20),
     fontWeight: '700',
     color: colors.primary,
   },
   priceLabel: {
-    fontSize: 12,
+    fontSize: scaleFontSize(12),
     color: colors.textMuted,
   },
   vehicleSpecs: {
@@ -348,8 +349,8 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   specText: {
-    marginLeft: 4,
-    fontSize: 13,
+    marginLeft: scale(4),
+    fontSize: scaleFontSize(13),
     color: colors.textSecondary,
   },
   supplierRow: {
@@ -359,7 +360,7 @@ const styles = StyleSheet.create({
     marginBottom: spacing.sm,
   },
   supplierName: {
-    fontSize: 13,
+    fontSize: scaleFontSize(13),
     color: colors.textSecondary,
   },
   rating: {
@@ -367,8 +368,8 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   ratingText: {
-    marginLeft: 4,
-    fontSize: 13,
+    marginLeft: scale(4),
+    fontSize: scaleFontSize(13),
     color: colors.textSecondary,
   },
   features: {
@@ -384,7 +385,7 @@ const styles = StyleSheet.create({
     padding: spacing.xl,
   },
   errorText: {
-    fontSize: 16,
+    fontSize: scaleFontSize(16),
     color: colors.textSecondary,
     textAlign: 'center',
     marginVertical: spacing.md,
@@ -396,7 +397,7 @@ const styles = StyleSheet.create({
     padding: spacing.xl,
   },
   emptyText: {
-    fontSize: 16,
+    fontSize: scaleFontSize(16),
     color: colors.textSecondary,
     textAlign: 'center',
     marginVertical: spacing.md,

@@ -11,7 +11,7 @@ import { router } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
 import { Card, Badge, Loading, colors, spacing } from '@shared/components';
 import { partnerApi } from '@shared/api';
-import { formatCurrency, formatDate, getBookingStatusLabel } from '@shared/utils';
+import { formatCurrency, formatDate, getBookingStatusLabel, scale, verticalScale, scaleFontSize } from '@shared/utils';
 import type { Booking } from '@shared/types';
 
 type FilterStatus = 'all' | 'pending' | 'confirmed' | 'completed' | 'cancelled';
@@ -215,7 +215,7 @@ const styles = StyleSheet.create({
   },
   filterContainer: {
     backgroundColor: colors.surface,
-    borderBottomWidth: 1,
+    borderBottomWidth: scale(1),
     borderBottomColor: colors.border,
   },
   filterList: {
@@ -226,14 +226,14 @@ const styles = StyleSheet.create({
     paddingHorizontal: spacing.md,
     paddingVertical: spacing.sm,
     marginRight: spacing.sm,
-    borderRadius: 20,
+    borderRadius: scale(20),
     backgroundColor: colors.background,
   },
   filterTabActive: {
     backgroundColor: colors.primary,
   },
   filterTabText: {
-    fontSize: 14,
+    fontSize: scaleFontSize(14),
     fontWeight: '500',
     color: colors.textMuted,
   },
@@ -254,7 +254,7 @@ const styles = StyleSheet.create({
     marginBottom: spacing.md,
   },
   bookingCode: {
-    fontSize: 12,
+    fontSize: scaleFontSize(12),
     fontFamily: 'monospace',
     color: colors.textMuted,
   },
@@ -266,21 +266,21 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   dot: {
-    width: 8,
-    height: 8,
-    borderRadius: 4,
+    width: scale(8),
+    height: verticalScale(8),
+    borderRadius: scale(4),
     marginRight: spacing.sm,
   },
   routeLine: {
-    width: 1,
-    height: 16,
+    width: scale(1),
+    height: verticalScale(16),
     backgroundColor: colors.border,
-    marginLeft: 3.5,
-    marginVertical: 2,
+    marginLeft: scale(3.5),
+    marginVertical: verticalScale(2),
   },
   routeText: {
     flex: 1,
-    fontSize: 14,
+    fontSize: scaleFontSize(14),
     color: colors.text,
   },
   bookingDetails: {
@@ -291,10 +291,10 @@ const styles = StyleSheet.create({
   detailItem: {
     flexDirection: 'row',
     alignItems: 'center',
-    gap: 4,
+    gap: scale(4),
   },
   detailText: {
-    fontSize: 12,
+    fontSize: scaleFontSize(12),
     color: colors.textMuted,
   },
   bookingFooter: {
@@ -302,16 +302,16 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     alignItems: 'center',
     paddingTop: spacing.sm,
-    borderTopWidth: 1,
+    borderTopWidth: scale(1),
     borderTopColor: colors.border,
   },
   customerName: {
-    fontSize: 14,
+    fontSize: scaleFontSize(14),
     color: colors.text,
     fontWeight: '500',
   },
   price: {
-    fontSize: 18,
+    fontSize: scaleFontSize(18),
     fontWeight: '700',
     color: colors.primary,
   },
@@ -321,7 +321,7 @@ const styles = StyleSheet.create({
     paddingVertical: spacing.xl * 2,
   },
   emptyText: {
-    fontSize: 16,
+    fontSize: scaleFontSize(16),
     color: colors.textMuted,
     marginTop: spacing.md,
   },

@@ -18,6 +18,7 @@ import { Button, Card, Loading, colors, spacing } from '@shared/components';
 import { useSearchStore } from '@shared/stores';
 import { commonApi } from '@shared/api';
 import { formatDate } from '@shared/utils';
+import { scale, verticalScale, scaleFontSize, responsiveSizes } from '@shared/utils/responsive';
 
 interface Airport {
   id: number;
@@ -772,13 +773,13 @@ const styles = StyleSheet.create({
     paddingTop: spacing.xl,
   },
   heroTitle: {
-    fontSize: 28,
+    fontSize: scaleFontSize(28),
     fontWeight: '700',
     color: colors.text,
     marginBottom: spacing.xs,
   },
   heroSubtitle: {
-    fontSize: 16,
+    fontSize: scaleFontSize(16),
     color: colors.textSecondary,
   },
   searchCard: {
@@ -794,9 +795,9 @@ const styles = StyleSheet.create({
     marginBottom: spacing.sm,
   },
   locationDot: {
-    width: 12,
-    height: 12,
-    borderRadius: 6,
+    width: scale(12),
+    height: scale(12),
+    borderRadius: scale(6),
     backgroundColor: colors.primary,
     marginRight: spacing.sm,
   },
@@ -804,7 +805,7 @@ const styles = StyleSheet.create({
     backgroundColor: colors.secondary,
   },
   locationLabel: {
-    fontSize: 14,
+    fontSize: scaleFontSize(14),
     fontWeight: '600',
     color: colors.text,
   },
@@ -815,9 +816,9 @@ const styles = StyleSheet.create({
   typeButton: {
     flexDirection: 'row',
     alignItems: 'center',
-    paddingVertical: 6,
-    paddingHorizontal: 12,
-    borderRadius: 20,
+    paddingVertical: verticalScale(6),
+    paddingHorizontal: scale(12),
+    borderRadius: scale(20),
     marginRight: spacing.sm,
     backgroundColor: colors.background,
   },
@@ -825,9 +826,9 @@ const styles = StyleSheet.create({
     backgroundColor: `${colors.primary}15`,
   },
   typeButtonText: {
-    fontSize: 13,
+    fontSize: scaleFontSize(13),
     color: colors.textMuted,
-    marginLeft: 4,
+    marginLeft: scale(4),
   },
   typeButtonTextActive: {
     color: colors.primary,
@@ -838,21 +839,21 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     padding: spacing.md,
     backgroundColor: colors.background,
-    borderRadius: 12,
+    borderRadius: scale(12),
   },
   locationInputText: {
     flex: 1,
     marginLeft: spacing.sm,
-    fontSize: 15,
+    fontSize: scaleFontSize(15),
     color: colors.textSecondary,
   },
   swapButton: {
     position: 'absolute',
     right: spacing.lg,
-    top: 120,
-    width: 40,
-    height: 40,
-    borderRadius: 20,
+    top: verticalScale(120),
+    width: scale(40),
+    height: scale(40),
+    borderRadius: scale(20),
     backgroundColor: colors.surface,
     justifyContent: 'center',
     alignItems: 'center',
@@ -877,7 +878,7 @@ const styles = StyleSheet.create({
   },
   detailText: {
     marginLeft: spacing.xs,
-    fontSize: 14,
+    fontSize: scaleFontSize(14),
     color: colors.text,
     fontWeight: '500',
   },
@@ -892,23 +893,23 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   featureIcon: {
-    width: 48,
-    height: 48,
-    borderRadius: 24,
+    width: scale(48),
+    height: scale(48),
+    borderRadius: scale(24),
     backgroundColor: `${colors.primary}15`,
     justifyContent: 'center',
     alignItems: 'center',
     marginBottom: spacing.sm,
   },
   featureTitle: {
-    fontSize: 13,
+    fontSize: scaleFontSize(13),
     fontWeight: '600',
     color: colors.text,
-    marginBottom: 2,
+    marginBottom: scale(2),
     textAlign: 'center',
   },
   featureText: {
-    fontSize: 11,
+    fontSize: scaleFontSize(11),
     color: colors.textMuted,
     textAlign: 'center',
   },
@@ -927,7 +928,7 @@ const styles = StyleSheet.create({
     backgroundColor: colors.surface,
   },
   modalTitle: {
-    fontSize: 18,
+    fontSize: scaleFontSize(18),
     fontWeight: '600',
     color: colors.text,
   },
@@ -937,14 +938,14 @@ const styles = StyleSheet.create({
     margin: spacing.md,
     padding: spacing.md,
     backgroundColor: colors.surface,
-    borderRadius: 12,
+    borderRadius: scale(12),
     borderWidth: 1,
     borderColor: colors.border,
   },
   searchInput: {
     flex: 1,
     marginLeft: spacing.sm,
-    fontSize: 16,
+    fontSize: scaleFontSize(16),
     color: colors.text,
   },
   loadingContainer: {
@@ -960,9 +961,9 @@ const styles = StyleSheet.create({
     borderBottomColor: colors.border,
   },
   airportIcon: {
-    width: 40,
-    height: 40,
-    borderRadius: 20,
+    width: scale(40),
+    height: scale(40),
+    borderRadius: scale(20),
     backgroundColor: `${colors.primary}15`,
     justifyContent: 'center',
     alignItems: 'center',
@@ -972,19 +973,20 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   airportName: {
-    fontSize: 15,
+    fontSize: scaleFontSize(15),
     fontWeight: '600',
     color: colors.text,
   },
   airportLocation: {
-    fontSize: 13,
+    fontSize: scaleFontSize(13),
     color: colors.textSecondary,
-    marginTop: 2,
+    marginTop: scale(2),
   },
   emptyText: {
     textAlign: 'center',
     color: colors.textMuted,
     marginTop: spacing.xl,
+    fontSize: scaleFontSize(14),
   },
   // Address modal styles
   // Place item styles for Google Places
@@ -996,9 +998,9 @@ const styles = StyleSheet.create({
     borderBottomColor: colors.border,
   },
   placeIcon: {
-    width: 40,
-    height: 40,
-    borderRadius: 20,
+    width: scale(40),
+    height: scale(40),
+    borderRadius: scale(20),
     backgroundColor: `${colors.primary}15`,
     justifyContent: 'center',
     alignItems: 'center',
@@ -1008,14 +1010,14 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   placeMainText: {
-    fontSize: 15,
+    fontSize: scaleFontSize(15),
     fontWeight: '600',
     color: colors.text,
   },
   placeSecondaryText: {
-    fontSize: 13,
+    fontSize: scaleFontSize(13),
     color: colors.textSecondary,
-    marginTop: 2,
+    marginTop: scale(2),
   },
   emptyPlaces: {
     alignItems: 'center',
@@ -1029,7 +1031,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   poweredByText: {
-    fontSize: 12,
+    fontSize: scaleFontSize(12),
     color: colors.textMuted,
   },
   // Passenger picker styles
@@ -1046,12 +1048,12 @@ const styles = StyleSheet.create({
   },
   pickerContainer: {
     backgroundColor: colors.surface,
-    borderRadius: 16,
+    borderRadius: scale(16),
     padding: spacing.lg,
     width: '80%',
   },
   pickerTitle: {
-    fontSize: 18,
+    fontSize: scaleFontSize(18),
     fontWeight: '600',
     color: colors.text,
     textAlign: 'center',
@@ -1063,9 +1065,9 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   passengerOption: {
-    width: 48,
-    height: 48,
-    borderRadius: 24,
+    width: scale(48),
+    height: scale(48),
+    borderRadius: scale(24),
     backgroundColor: colors.background,
     justifyContent: 'center',
     alignItems: 'center',
@@ -1075,7 +1077,7 @@ const styles = StyleSheet.create({
     backgroundColor: colors.primary,
   },
   passengerOptionText: {
-    fontSize: 18,
+    fontSize: scaleFontSize(18),
     fontWeight: '600',
     color: colors.text,
   },
@@ -1085,9 +1087,9 @@ const styles = StyleSheet.create({
   // Date/Time picker styles for iOS
   dateTimePickerContainer: {
     backgroundColor: colors.surface,
-    borderTopLeftRadius: 16,
-    borderTopRightRadius: 16,
-    paddingBottom: 40,
+    borderTopLeftRadius: scale(16),
+    borderTopRightRadius: scale(16),
+    paddingBottom: verticalScale(40),
   },
   dateTimePickerHeader: {
     flexDirection: 'row',
@@ -1098,20 +1100,20 @@ const styles = StyleSheet.create({
     borderBottomColor: colors.border,
   },
   dateTimePickerTitle: {
-    fontSize: 17,
+    fontSize: scaleFontSize(17),
     fontWeight: '600',
     color: colors.text,
   },
   dateTimePickerCancel: {
-    fontSize: 16,
+    fontSize: scaleFontSize(16),
     color: colors.textSecondary,
   },
   dateTimePickerDone: {
-    fontSize: 16,
+    fontSize: scaleFontSize(16),
     fontWeight: '600',
     color: colors.primary,
   },
   iosPicker: {
-    height: 200,
+    height: verticalScale(200),
   },
 });

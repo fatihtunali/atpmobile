@@ -10,6 +10,7 @@ import {
 import { Ionicons } from '@expo/vector-icons';
 import { Card, Badge, Button, Loading, colors, spacing } from '@shared/components';
 import { partnerApi } from '@shared/api';
+import { scale, verticalScale, scaleFontSize } from '@shared/utils/responsive';
 
 interface Vehicle {
   id: number;
@@ -217,9 +218,9 @@ const styles = StyleSheet.create({
     marginBottom: spacing.md,
   },
   vehicleIcon: {
-    width: 60,
-    height: 60,
-    borderRadius: 12,
+    width: scale(60),
+    height: verticalScale(60),
+    borderRadius: scale(12),
     backgroundColor: colors.primaryLight,
     alignItems: 'center',
     justifyContent: 'center',
@@ -229,28 +230,28 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   vehicleName: {
-    fontSize: 18,
+    fontSize: scaleFontSize(18),
     fontWeight: '600',
     color: colors.text,
   },
   vehicleDetails: {
-    fontSize: 14,
+    fontSize: scaleFontSize(14),
     color: colors.textMuted,
-    marginTop: 2,
+    marginTop: verticalScale(2),
   },
   plateNumber: {
-    fontSize: 14,
+    fontSize: scaleFontSize(14),
     fontWeight: '600',
     color: colors.primary,
-    marginTop: 4,
+    marginTop: verticalScale(4),
     fontFamily: 'monospace',
   },
   vehicleSpecs: {
     flexDirection: 'row',
     justifyContent: 'space-around',
     paddingVertical: spacing.md,
-    borderTopWidth: 1,
-    borderBottomWidth: 1,
+    borderTopWidth: scale(1),
+    borderBottomWidth: scale(1),
     borderColor: colors.border,
   },
   specItem: {
@@ -259,7 +260,7 @@ const styles = StyleSheet.create({
     gap: spacing.xs,
   },
   specValue: {
-    fontSize: 14,
+    fontSize: scaleFontSize(14),
     color: colors.text,
   },
   assignedDriver: {
@@ -268,11 +269,11 @@ const styles = StyleSheet.create({
     marginTop: spacing.md,
     padding: spacing.sm,
     backgroundColor: colors.primaryLight,
-    borderRadius: 8,
+    borderRadius: scale(8),
     gap: spacing.sm,
   },
   assignedDriverText: {
-    fontSize: 14,
+    fontSize: scaleFontSize(14),
     color: colors.primary,
     fontWeight: '500',
   },
@@ -282,11 +283,11 @@ const styles = StyleSheet.create({
     marginTop: spacing.md,
     padding: spacing.sm,
     backgroundColor: 'rgba(255, 152, 0, 0.1)',
-    borderRadius: 8,
+    borderRadius: scale(8),
     gap: spacing.sm,
   },
   unassignedText: {
-    fontSize: 14,
+    fontSize: scaleFontSize(14),
     color: colors.warning,
     fontWeight: '500',
   },
@@ -314,13 +315,13 @@ const styles = StyleSheet.create({
     paddingVertical: spacing.xl * 2,
   },
   emptyText: {
-    fontSize: 18,
+    fontSize: scaleFontSize(18),
     fontWeight: '600',
     color: colors.text,
     marginTop: spacing.md,
   },
   emptySubtext: {
-    fontSize: 14,
+    fontSize: scaleFontSize(14),
     color: colors.textMuted,
     marginTop: spacing.xs,
   },

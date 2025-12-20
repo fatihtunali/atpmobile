@@ -11,7 +11,7 @@ import { Ionicons } from '@expo/vector-icons';
 import { Card, Badge, Loading, colors, spacing } from '@shared/components';
 import { partnerApi } from '@shared/api';
 import { useAuthStore } from '@shared/stores';
-import { formatCurrency, formatDate, getBookingStatusLabel } from '@shared/utils';
+import { formatCurrency, formatDate, getBookingStatusLabel, scale, verticalScale, scaleFontSize } from '@shared/utils';
 import type { Booking, EarningsSummary } from '@shared/types';
 
 interface DashboardData {
@@ -227,11 +227,11 @@ const styles = StyleSheet.create({
     paddingBottom: spacing.md,
   },
   welcomeText: {
-    fontSize: 14,
+    fontSize: scaleFontSize(14),
     color: colors.textMuted,
   },
   companyName: {
-    fontSize: 24,
+    fontSize: scaleFontSize(24),
     fontWeight: '700',
     color: colors.text,
     marginBottom: spacing.sm,
@@ -248,11 +248,11 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   earningsLabel: {
-    fontSize: 14,
+    fontSize: scaleFontSize(14),
     color: 'rgba(255,255,255,0.8)',
   },
   earningsValue: {
-    fontSize: 36,
+    fontSize: scaleFontSize(36),
     fontWeight: '700',
     color: '#fff',
     marginTop: spacing.xs,
@@ -261,7 +261,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     marginTop: spacing.lg,
     paddingTop: spacing.md,
-    borderTopWidth: 1,
+    borderTopWidth: scale(1),
     borderTopColor: 'rgba(255,255,255,0.2)',
   },
   earningStat: {
@@ -269,17 +269,17 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   earningStatValue: {
-    fontSize: 16,
+    fontSize: scaleFontSize(16),
     fontWeight: '600',
     color: '#fff',
   },
   earningStatLabel: {
-    fontSize: 11,
+    fontSize: scaleFontSize(11),
     color: 'rgba(255,255,255,0.7)',
-    marginTop: 2,
+    marginTop: verticalScale(2),
   },
   earningStatDivider: {
-    width: 1,
+    width: scale(1),
     backgroundColor: 'rgba(255,255,255,0.2)',
   },
   statsRow: {
@@ -293,15 +293,15 @@ const styles = StyleSheet.create({
     padding: spacing.md,
   },
   statValue: {
-    fontSize: 24,
+    fontSize: scaleFontSize(24),
     fontWeight: '700',
     color: colors.text,
     marginTop: spacing.sm,
   },
   statLabel: {
-    fontSize: 11,
+    fontSize: scaleFontSize(11),
     color: colors.textMuted,
-    marginTop: 2,
+    marginTop: verticalScale(2),
   },
   quickActions: {
     padding: spacing.md,
@@ -316,7 +316,7 @@ const styles = StyleSheet.create({
     padding: spacing.lg,
   },
   actionLabel: {
-    fontSize: 14,
+    fontSize: scaleFontSize(14),
     fontWeight: '500',
     color: colors.text,
     marginTop: spacing.sm,
@@ -331,12 +331,12 @@ const styles = StyleSheet.create({
     marginBottom: spacing.md,
   },
   sectionTitle: {
-    fontSize: 18,
+    fontSize: scaleFontSize(18),
     fontWeight: '600',
     color: colors.text,
   },
   viewAll: {
-    fontSize: 14,
+    fontSize: scaleFontSize(14),
     color: colors.primary,
     fontWeight: '500',
   },
@@ -351,12 +351,12 @@ const styles = StyleSheet.create({
     marginBottom: spacing.sm,
   },
   bookingCode: {
-    fontSize: 12,
+    fontSize: scaleFontSize(12),
     fontFamily: 'monospace',
     color: colors.textMuted,
   },
   bookingRoute: {
-    fontSize: 14,
+    fontSize: scaleFontSize(14),
     color: colors.text,
     marginBottom: spacing.sm,
   },
@@ -366,11 +366,11 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   bookingDate: {
-    fontSize: 12,
+    fontSize: scaleFontSize(12),
     color: colors.textMuted,
   },
   bookingPrice: {
-    fontSize: 16,
+    fontSize: scaleFontSize(16),
     fontWeight: '700',
     color: colors.primary,
   },
@@ -379,7 +379,7 @@ const styles = StyleSheet.create({
     padding: spacing.xl,
   },
   emptyText: {
-    fontSize: 14,
+    fontSize: scaleFontSize(14),
     color: colors.textMuted,
     marginTop: spacing.md,
   },

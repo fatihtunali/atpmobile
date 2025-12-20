@@ -14,6 +14,7 @@ import { Ionicons } from '@expo/vector-icons';
 import { Button, Input, Card, colors, spacing } from '@shared/components';
 import { partnerApi, setAuthToken } from '@shared/api';
 import { useAuth } from '@shared/hooks';
+import { scale, verticalScale, scaleFontSize } from '@shared/utils/responsive';
 
 type PartnerType = 'affiliate' | 'supplier';
 
@@ -209,22 +210,22 @@ const styles = StyleSheet.create({
     marginBottom: spacing.xl,
   },
   logoContainer: {
-    width: 100,
-    height: 100,
-    borderRadius: 50,
+    width: scale(100),
+    height: verticalScale(100),
+    borderRadius: scale(50),
     backgroundColor: colors.primaryLight,
     alignItems: 'center',
     justifyContent: 'center',
     marginBottom: spacing.md,
   },
   title: {
-    fontSize: 28,
+    fontSize: scaleFontSize(28),
     fontWeight: '700',
     color: colors.text,
     marginBottom: spacing.xs,
   },
   subtitle: {
-    fontSize: 15,
+    fontSize: scaleFontSize(15),
     color: colors.textMuted,
     textAlign: 'center',
   },
@@ -239,9 +240,9 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     padding: spacing.md,
-    borderRadius: 12,
+    borderRadius: scale(12),
     backgroundColor: colors.surface,
-    borderWidth: 2,
+    borderWidth: scale(2),
     borderColor: colors.border,
     gap: spacing.sm,
   },
@@ -250,7 +251,7 @@ const styles = StyleSheet.create({
     backgroundColor: colors.primaryLight,
   },
   typeButtonText: {
-    fontSize: 16,
+    fontSize: scaleFontSize(16),
     fontWeight: '600',
     color: colors.textMuted,
   },
@@ -265,7 +266,7 @@ const styles = StyleSheet.create({
     marginBottom: spacing.lg,
   },
   forgotPasswordText: {
-    fontSize: 14,
+    fontSize: scaleFontSize(14),
     color: colors.primary,
     fontWeight: '500',
   },
@@ -278,11 +279,11 @@ const styles = StyleSheet.create({
     marginTop: spacing.lg,
   },
   registerText: {
-    fontSize: 14,
+    fontSize: scaleFontSize(14),
     color: colors.textMuted,
   },
   registerLink: {
-    fontSize: 14,
+    fontSize: scaleFontSize(14),
     color: colors.primary,
     fontWeight: '600',
   },
@@ -295,10 +296,10 @@ const styles = StyleSheet.create({
   infoItem: {
     flexDirection: 'row',
     alignItems: 'center',
-    gap: 4,
+    gap: scale(4),
   },
   infoText: {
-    fontSize: 12,
+    fontSize: scaleFontSize(12),
     color: colors.textMuted,
   },
 });

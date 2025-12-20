@@ -12,6 +12,7 @@ import { Ionicons } from '@expo/vector-icons';
 import { Button, Card, Input, colors, spacing } from '@shared/components';
 import { useSearchStore } from '@shared/stores';
 import { formatCurrency, formatDate, formatTime, isValidEmail, isValidPhone } from '@shared/utils';
+import { scale, verticalScale, scaleFontSize } from '@shared/utils/responsive';
 import type { SearchResult } from '@shared/types';
 
 export default function BookingDetailsScreen() {
@@ -218,7 +219,7 @@ const styles = StyleSheet.create({
     padding: spacing.md,
   },
   sectionTitle: {
-    fontSize: 16,
+    fontSize: scaleFontSize(16),
     fontWeight: '600',
     color: colors.text,
     marginBottom: spacing.md,
@@ -229,12 +230,12 @@ const styles = StyleSheet.create({
   routePoint: {
     flexDirection: 'row',
     alignItems: 'center',
-    marginBottom: 4,
+    marginBottom: scale(4),
   },
   routeDot: {
-    width: 10,
-    height: 10,
-    borderRadius: 5,
+    width: scale(10),
+    height: scale(10),
+    borderRadius: scale(5),
     backgroundColor: colors.primary,
     marginRight: spacing.sm,
   },
@@ -242,14 +243,14 @@ const styles = StyleSheet.create({
     backgroundColor: colors.secondary,
   },
   routeLabel: {
-    fontSize: 12,
+    fontSize: scaleFontSize(12),
     color: colors.textMuted,
     textTransform: 'uppercase',
   },
   routeValue: {
-    fontSize: 14,
+    fontSize: scaleFontSize(14),
     color: colors.text,
-    marginLeft: 18,
+    marginLeft: scale(18),
   },
   detailsRow: {
     flexDirection: 'row',
@@ -263,8 +264,8 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   detailText: {
-    marginLeft: 6,
-    fontSize: 14,
+    marginLeft: scale(6),
+    fontSize: scaleFontSize(14),
     color: colors.text,
     fontWeight: '500',
   },
@@ -282,20 +283,20 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   vehicleName: {
-    fontSize: 16,
+    fontSize: scaleFontSize(16),
     fontWeight: '600',
     color: colors.text,
   },
   supplierName: {
-    fontSize: 13,
+    fontSize: scaleFontSize(13),
     color: colors.textSecondary,
-    marginTop: 2,
+    marginTop: scale(2),
   },
   priceInfo: {
     alignItems: 'flex-end',
   },
   price: {
-    fontSize: 20,
+    fontSize: scaleFontSize(20),
     fontWeight: '700',
     color: colors.primary,
   },
@@ -313,7 +314,7 @@ const styles = StyleSheet.create({
     padding: spacing.xl,
   },
   errorText: {
-    fontSize: 16,
+    fontSize: scaleFontSize(16),
     color: colors.error,
     marginBottom: spacing.md,
   },

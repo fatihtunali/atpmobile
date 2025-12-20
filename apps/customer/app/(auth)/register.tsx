@@ -14,6 +14,7 @@ import { Ionicons } from '@expo/vector-icons';
 import { Button, Input, colors, spacing } from '@shared/components';
 import { customerApi } from '@shared/api';
 import { useAuth } from '@shared/hooks';
+import { scale, verticalScale, scaleFontSize } from '@shared/utils/responsive';
 
 export default function RegisterScreen() {
   const { saveAuth } = useAuth();
@@ -205,23 +206,23 @@ const styles = StyleSheet.create({
     marginBottom: spacing.lg,
   },
   title: {
-    fontSize: 28,
+    fontSize: scaleFontSize(28),
     fontWeight: '700',
     color: colors.text,
     marginBottom: spacing.xs,
   },
   subtitle: {
-    fontSize: 16,
+    fontSize: scaleFontSize(16),
     color: colors.textSecondary,
   },
   form: {
     flex: 1,
   },
   terms: {
-    fontSize: 13,
+    fontSize: scaleFontSize(13),
     color: colors.textSecondary,
     marginBottom: spacing.lg,
-    lineHeight: 20,
+    lineHeight: scaleFontSize(20),
   },
   termsLink: {
     color: colors.primary,
@@ -237,11 +238,11 @@ const styles = StyleSheet.create({
   },
   footerText: {
     color: colors.textSecondary,
-    fontSize: 15,
+    fontSize: scaleFontSize(15),
   },
   footerLink: {
     color: colors.primary,
-    fontSize: 15,
+    fontSize: scaleFontSize(15),
     fontWeight: '600',
   },
 });

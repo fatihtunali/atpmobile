@@ -1,18 +1,27 @@
-import { Link, Stack } from 'expo-router';
-import { View, Text, StyleSheet } from 'react-native';
+import { Redirect } from 'expo-router';
+import { useEffect, useState } from 'react';
+import { View, Text, StyleSheet, ActivityIndicator } from 'react-native';
 import { colors, spacing } from '@shared/components';
 
 export default function NotFoundScreen() {
+  const [shouldRedirect, setShouldRedirect] = useState(false);
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setShouldRedirect(true);
+    }, 500);
+    return () => clearTimeout(timer);
+  }, []);
+
+  if (shouldRedirect) {
+    return <Redirect href="/(tabs)" />;
+  }
+
   return (
-    <>
-      <Stack.Screen options={{ title: 'Oops!' }} />
-      <View style={styles.container}>
-        <Text style={styles.title}>Page not found</Text>
-        <Link href="/(tabs)" style={styles.link}>
-          <Text style={styles.linkText}>Go to home screen</Text>
-        </Link>
-      </View>
-    </>
+    <View style={styles.container}>
+      <ActivityIndicator size="large" color={colors.primary} />
+      <Text style={styles.text}>Redirecting...</Text>
+    </View>
   );
 }
 
@@ -24,22 +33,9 @@ const styles = StyleSheet.create({
     padding: spacing.xl,
     backgroundColor: colors.background,
   },
-  title: {
-    fontSize: 20,
-    fontWeight: '600',
-    color: colors.text,
-    marginBottom: spacing.md,
-  },
-  link: {
-    marginTop: spacing.md,
-    paddingVertical: spacing.md,
-    paddingHorizontal: spacing.lg,
-    backgroundColor: colors.primary,
-    borderRadius: 8,
-  },
-  linkText: {
+  text: {
     fontSize: 16,
-    color: '#ffffff',
-    fontWeight: '500',
+    color: colors.textSecondary,
+    marginTop: spacing.md,
   },
 });

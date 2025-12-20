@@ -10,6 +10,8 @@ import type {
   RideStatusUpdate,
   EarningsSummary,
   EarningsTransaction,
+  PaymentMethod,
+  PaymentMethodType,
 } from '@shared/types';
 
 // ============================================
@@ -129,24 +131,50 @@ export const customerApi = {
     flightNumber?: string;
     notes?: string;
     promoCode?: string;
-  }) =>
-    apiRequest<Booking>('/api/mobile/customer/bookings', {
+    paymentMethod?: PaymentMethodType;
+  }) => {
+    // Transform mobile format to web public API format (1:1 with web)
+    const nameParts = data.passengerDetails.name.split(' ');
+    const firstName = nameParts[0] || '';
+    const lastName = nameParts.slice(1).join(' ') || '';
+    const pickupTime = `${data.searchRequest.pickupDate}T${data.searchRequest.pickupTime}:00`;
+    const isFromAirport = data.searchRequest.pickupType === 'AIRPORT';
+
+    const webApiData = {
+      airportId: data.searchResult.airportId,
+      zoneId: data.searchResult.zoneId,
+      direction: isFromAirport ? 'FROM_AIRPORT' : 'TO_AIRPORT',
+      pickupTime,
+      paxAdults: data.searchRequest.passengers,
+      vehicleType: data.searchResult.vehicleType,
+      currency: data.searchResult.currency || 'EUR',
+      leadPassenger: { firstName, lastName, email: data.passengerDetails.email, phone: data.passengerDetails.phone },
+      flightNumber: data.flightNumber,
+      pickupAddress: data.searchRequest.pickupAddress,
+      dropoffAddress: data.searchRequest.dropoffAddress,
+      specialRequests: data.notes,
+      paymentMethod: data.paymentMethod,
+      promoCode: data.promoCode,
+    };
+
+    return apiRequest<Booking>('/api/public/bookings', {
       method: 'POST',
-      body: JSON.stringify(data),
-    }),
+      body: JSON.stringify(webApiData),
+    });
+  },
 
   getBookings: (type?: 'upcoming' | 'past', page?: number, limit?: number) =>
     apiRequest<{ bookings: Booking[]; page: number; limit: number }>(
       `/api/mobile/customer/bookings?type=${type || 'upcoming'}${page ? `&page=${page}` : ''}${limit ? `&limit=${limit}` : ''}`
     ),
 
-  getBooking: (publicCode: string) =>
-    apiRequest<Booking>(`/api/mobile/customer/bookings/${publicCode}`),
+  getBooking: (publicCode: string, email: string) =>
+    apiRequest<Booking>(`/api/public/bookings/${publicCode}?email=${encodeURIComponent(email)}`),
 
-  cancelBooking: (publicCode: string, reason?: string) =>
-    apiRequest<{ message: string }>(`/api/mobile/customer/bookings/${publicCode}/cancel`, {
+  cancelBooking: (publicCode: string, email: string, reason?: string) =>
+    apiRequest<{ message: string }>(`/api/public/bookings/${publicCode}/cancel`, {
       method: 'POST',
-      body: JSON.stringify({ reason }),
+      body: JSON.stringify({ email, reason }),
     }),
 
   // Tracking
@@ -157,9 +185,19 @@ export const customerApi = {
     }>(`/api/mobile/tracking/${publicCode}`),
 
   // Payments
-  createPaymentIntent: (bookingCode: string) =>
-    apiRequest<{ clientSecret: string }>(`/api/mobile/customer/bookings/${bookingCode}/payment`, {
+  getPaymentMethods: () =>
+    apiRequest<PaymentMethod[]>('/api/mobile/customer/payment-methods'),
+
+  createPaymentIntent: (bookingCode: string, paymentMethod: PaymentMethodType) =>
+    apiRequest<{ clientSecret?: string; bankDetails?: { bankName: string; iban: string; accountName: string; reference: string }; cryptoAddress?: string; cryptoCurrency?: string; paymentUrl?: string }>(`/api/public/payments`, {
       method: 'POST',
+      body: JSON.stringify({ bookingCode, paymentMethod }),
+
+  // Convert guest booking to customer account
+  convertGuest: (data: { bookingCode: string; email: string; password: string; name?: string; linkToExisting?: boolean }) =>
+    apiRequest<{ success: boolean; customerId?: number; isNewUser?: boolean; accountExists?: boolean; error?: string }>('/api/customer/convert-guest', {
+      method: 'POST',
+      body: JSON.stringify(data),
     }),
 };
 
@@ -420,13 +458,13 @@ export const commonApi = {
 
   // Notifications
   registerPushToken: (token: string, platform: 'ios' | 'android') =>
-    apiRequest<{ success: boolean }>('/api/mobile/notifications/register', {
+    apiRequest<{ success: boolean }>('/api/mobile/notifications', {
       method: 'POST',
       body: JSON.stringify({ token, platform }),
     }),
 
   unregisterPushToken: (token: string) =>
-    apiRequest<{ success: boolean }>('/api/mobile/notifications/unregister', {
+    apiRequest<{ success: boolean }>('/api/mobile/notifications', {
       method: 'DELETE',
       body: JSON.stringify({ token }),
     }),

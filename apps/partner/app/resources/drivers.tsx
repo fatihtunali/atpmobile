@@ -12,6 +12,7 @@ import { router } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
 import { Card, Badge, Button, Loading, colors, spacing } from '@shared/components';
 import { partnerApi } from '@shared/api';
+import { scale, verticalScale, scaleFontSize } from '@shared/utils/responsive';
 
 interface Driver {
   id: number;
@@ -213,9 +214,9 @@ const styles = StyleSheet.create({
     marginBottom: spacing.md,
   },
   driverAvatar: {
-    width: 60,
-    height: 60,
-    borderRadius: 30,
+    width: scale(60),
+    height: verticalScale(60),
+    borderRadius: scale(30),
     backgroundColor: colors.primaryLight,
     alignItems: 'center',
     justifyContent: 'center',
@@ -225,30 +226,30 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   driverName: {
-    fontSize: 18,
+    fontSize: scaleFontSize(18),
     fontWeight: '600',
     color: colors.text,
   },
   driverPhone: {
-    fontSize: 14,
+    fontSize: scaleFontSize(14),
     color: colors.textMuted,
-    marginTop: 2,
+    marginTop: verticalScale(2),
   },
   vehicleInfo: {
-    fontSize: 12,
+    fontSize: scaleFontSize(12),
     color: colors.textMuted,
-    marginTop: 4,
+    marginTop: verticalScale(4),
   },
   statusBadges: {
     alignItems: 'flex-end',
-    gap: 4,
+    gap: verticalScale(4),
   },
   driverStats: {
     flexDirection: 'row',
     justifyContent: 'space-around',
     paddingVertical: spacing.md,
-    borderTopWidth: 1,
-    borderBottomWidth: 1,
+    borderTopWidth: scale(1),
+    borderBottomWidth: scale(1),
     borderColor: colors.border,
   },
   statItem: {
@@ -256,18 +257,18 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   statValue: {
-    fontSize: 16,
+    fontSize: scaleFontSize(16),
     fontWeight: '600',
     color: colors.text,
-    marginTop: 4,
+    marginTop: verticalScale(4),
   },
   statLabel: {
-    fontSize: 11,
+    fontSize: scaleFontSize(11),
     color: colors.textMuted,
-    marginTop: 2,
+    marginTop: verticalScale(2),
   },
   statDivider: {
-    width: 1,
+    width: scale(1),
     backgroundColor: colors.border,
   },
   driverActions: {
@@ -296,13 +297,13 @@ const styles = StyleSheet.create({
     paddingVertical: spacing.xl * 2,
   },
   emptyText: {
-    fontSize: 18,
+    fontSize: scaleFontSize(18),
     fontWeight: '600',
     color: colors.text,
     marginTop: spacing.md,
   },
   emptySubtext: {
-    fontSize: 14,
+    fontSize: scaleFontSize(14),
     color: colors.textMuted,
     marginTop: spacing.xs,
   },

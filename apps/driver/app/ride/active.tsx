@@ -15,6 +15,7 @@ import { Button, Card, Loading, colors, spacing } from '@shared/components';
 import { driverApi } from '@shared/api';
 import { useDriverRidesStore, useLocationStore } from '@shared/stores';
 import { formatDuration } from '@shared/utils';
+import { scale, verticalScale, scaleFontSize } from '@shared/utils/responsive';
 
 export default function ActiveRideScreen() {
   const { activeRide, setActiveRide } = useDriverRidesStore();
@@ -291,20 +292,20 @@ const styles = StyleSheet.create({
     backgroundColor: colors.primary,
   },
   timerDot: {
-    width: 12,
-    height: 12,
-    borderRadius: 6,
+    width: scale(12),
+    height: verticalScale(12),
+    borderRadius: scale(6),
     backgroundColor: '#fff',
     marginBottom: spacing.sm,
   },
   timerLabel: {
-    fontSize: 12,
+    fontSize: scaleFontSize(12),
     color: 'rgba(255, 255, 255, 0.8)',
     letterSpacing: 1,
     marginBottom: spacing.xs,
   },
   timerValue: {
-    fontSize: 48,
+    fontSize: scaleFontSize(48),
     fontWeight: '700',
     color: '#fff',
   },
@@ -317,9 +318,9 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   customerAvatar: {
-    width: 48,
-    height: 48,
-    borderRadius: 24,
+    width: scale(48),
+    height: verticalScale(48),
+    borderRadius: scale(24),
     backgroundColor: `${colors.primary}15`,
     justifyContent: 'center',
     alignItems: 'center',
@@ -329,17 +330,17 @@ const styles = StyleSheet.create({
     marginLeft: spacing.md,
   },
   customerName: {
-    fontSize: 16,
+    fontSize: scaleFontSize(16),
     fontWeight: '600',
     color: colors.text,
   },
   passengerCount: {
-    fontSize: 13,
+    fontSize: scaleFontSize(13),
     color: colors.textSecondary,
-    marginTop: 2,
+    marginTop: verticalScale(2),
   },
   callButton: {
-    width: 48,
+    width: scale(48),
     paddingHorizontal: 0,
   },
   destinationCard: {
@@ -351,9 +352,9 @@ const styles = StyleSheet.create({
     marginBottom: spacing.md,
   },
   destinationIcon: {
-    width: 48,
-    height: 48,
-    borderRadius: 24,
+    width: scale(48),
+    height: verticalScale(48),
+    borderRadius: scale(24),
     backgroundColor: `${colors.secondary}15`,
     justifyContent: 'center',
     alignItems: 'center',
@@ -363,20 +364,20 @@ const styles = StyleSheet.create({
     marginLeft: spacing.md,
   },
   destinationLabel: {
-    fontSize: 11,
+    fontSize: scaleFontSize(11),
     color: colors.textMuted,
     letterSpacing: 0.5,
-    marginBottom: 4,
+    marginBottom: verticalScale(4),
   },
   destinationName: {
-    fontSize: 16,
+    fontSize: scaleFontSize(16),
     fontWeight: '600',
     color: colors.text,
   },
   destinationAddress: {
-    fontSize: 13,
+    fontSize: scaleFontSize(13),
     color: colors.textSecondary,
-    marginTop: 2,
+    marginTop: verticalScale(2),
   },
   completeContainer: {
     position: 'absolute',
@@ -394,7 +395,7 @@ const styles = StyleSheet.create({
   },
   completeNote: {
     marginTop: spacing.sm,
-    fontSize: 12,
+    fontSize: scaleFontSize(12),
     color: colors.textMuted,
     textAlign: 'center',
   },
@@ -405,7 +406,7 @@ const styles = StyleSheet.create({
     padding: spacing.xl,
   },
   errorText: {
-    fontSize: 16,
+    fontSize: scaleFontSize(16),
     color: colors.textSecondary,
     marginBottom: spacing.md,
   },

@@ -16,6 +16,7 @@ import {
   getBookingStatusLabel,
   getBookingStatusColor,
 } from '@shared/utils';
+import { scale, verticalScale, scaleFontSize } from '@shared/utils/responsive';
 import type { Booking } from '@shared/types';
 
 export default function TrackingScreen() {
@@ -282,21 +283,21 @@ const styles = StyleSheet.create({
     backgroundColor: colors.surface,
   },
   statusIcon: {
-    width: 72,
-    height: 72,
-    borderRadius: 36,
+    width: scale(72),
+    height: scale(72),
+    borderRadius: scale(36),
     justifyContent: 'center',
     alignItems: 'center',
     marginBottom: spacing.md,
   },
   statusTitle: {
-    fontSize: 20,
+    fontSize: scaleFontSize(20),
     fontWeight: '700',
     color: colors.text,
     marginBottom: spacing.xs,
   },
   statusMessage: {
-    fontSize: 14,
+    fontSize: scaleFontSize(14),
     color: colors.textSecondary,
   },
   driverCard: {
@@ -309,9 +310,9 @@ const styles = StyleSheet.create({
     marginBottom: spacing.md,
   },
   driverAvatar: {
-    width: 56,
-    height: 56,
-    borderRadius: 28,
+    width: scale(56),
+    height: scale(56),
+    borderRadius: scale(28),
     backgroundColor: `${colors.primary}15`,
     justifyContent: 'center',
     alignItems: 'center',
@@ -321,15 +322,15 @@ const styles = StyleSheet.create({
     marginLeft: spacing.md,
   },
   driverName: {
-    fontSize: 16,
+    fontSize: scaleFontSize(16),
     fontWeight: '600',
     color: colors.text,
-    marginBottom: 2,
+    marginBottom: scale(2),
   },
   vehicleInfo: {
-    fontSize: 14,
+    fontSize: scaleFontSize(14),
     color: colors.textSecondary,
-    marginBottom: 4,
+    marginBottom: scale(4),
   },
   driverActions: {
     flexDirection: 'row',
@@ -344,7 +345,7 @@ const styles = StyleSheet.create({
     padding: spacing.md,
   },
   sectionTitle: {
-    fontSize: 16,
+    fontSize: scaleFontSize(16),
     fontWeight: '600',
     color: colors.text,
     marginBottom: spacing.md,
@@ -357,34 +358,34 @@ const styles = StyleSheet.create({
     alignItems: 'flex-start',
   },
   routeDot: {
-    width: 12,
-    height: 12,
-    borderRadius: 6,
+    width: scale(12),
+    height: scale(12),
+    borderRadius: scale(6),
     backgroundColor: colors.primary,
-    marginTop: 4,
+    marginTop: scale(4),
   },
   routeDotDest: {
     backgroundColor: colors.secondary,
   },
   routeLine: {
-    width: 2,
-    height: 24,
+    width: scale(2),
+    height: verticalScale(24),
     backgroundColor: colors.border,
-    marginLeft: 5,
-    marginVertical: 4,
+    marginLeft: scale(5),
+    marginVertical: scale(4),
   },
   routeTextContainer: {
     flex: 1,
     marginLeft: spacing.sm,
   },
   routeLabel: {
-    fontSize: 11,
+    fontSize: scaleFontSize(11),
     color: colors.textMuted,
     textTransform: 'uppercase',
-    marginBottom: 2,
+    marginBottom: scale(2),
   },
   routeAddress: {
-    fontSize: 14,
+    fontSize: scaleFontSize(14),
     color: colors.text,
   },
   tripMeta: {
@@ -399,8 +400,8 @@ const styles = StyleSheet.create({
     marginRight: spacing.lg,
   },
   metaText: {
-    marginLeft: 6,
-    fontSize: 14,
+    marginLeft: scale(6),
+    fontSize: scaleFontSize(14),
     color: colors.textSecondary,
   },
   codeContainer: {
@@ -408,12 +409,12 @@ const styles = StyleSheet.create({
     paddingVertical: spacing.md,
   },
   codeLabel: {
-    fontSize: 12,
+    fontSize: scaleFontSize(12),
     color: colors.textMuted,
-    marginBottom: 4,
+    marginBottom: scale(4),
   },
   codeValue: {
-    fontSize: 18,
+    fontSize: scaleFontSize(18),
     fontWeight: '600',
     color: colors.primary,
   },
@@ -428,7 +429,7 @@ const styles = StyleSheet.create({
     padding: spacing.xl,
   },
   errorText: {
-    fontSize: 16,
+    fontSize: scaleFontSize(16),
     color: colors.textSecondary,
     textAlign: 'center',
     marginVertical: spacing.md,

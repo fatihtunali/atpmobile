@@ -1,8 +1,20 @@
-import { Tabs } from 'expo-router';
+import { Tabs, Redirect } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
-import { colors } from '@shared/components';
+import { colors, Loading } from '@shared/components';
+import { useAuth } from '@shared/hooks';
 
 export default function TabLayout() {
+  const { isAuthenticated, isLoading, driver } = useAuth();
+
+  if (isLoading) {
+    return <Loading fullScreen />;
+  }
+
+  // Redirect to login if not authenticated or not a driver
+  if (!isAuthenticated || !driver) {
+    return <Redirect href="/(auth)/login" />;
+  }
+
   return (
     <Tabs
       screenOptions={{

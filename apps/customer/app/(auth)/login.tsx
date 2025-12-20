@@ -14,6 +14,7 @@ import { Ionicons } from '@expo/vector-icons';
 import { Button, Input, colors, spacing } from '@shared/components';
 import { customerApi } from '@shared/api';
 import { useAuth } from '@shared/hooks';
+import { scale, verticalScale, scaleFontSize } from '@shared/utils/responsive';
 
 export default function LoginScreen() {
   const { saveAuth } = useAuth();
@@ -166,22 +167,22 @@ const styles = StyleSheet.create({
     marginBottom: spacing.xl,
   },
   logoContainer: {
-    width: 80,
-    height: 80,
-    borderRadius: 40,
+    width: scale(80),
+    height: scale(80),
+    borderRadius: scale(40),
     backgroundColor: `${colors.primary}15`,
     justifyContent: 'center',
     alignItems: 'center',
     marginBottom: spacing.md,
   },
   title: {
-    fontSize: 28,
+    fontSize: scaleFontSize(28),
     fontWeight: '700',
     color: colors.text,
     marginBottom: spacing.xs,
   },
   subtitle: {
-    fontSize: 16,
+    fontSize: scaleFontSize(16),
     color: colors.textSecondary,
     textAlign: 'center',
   },
@@ -194,7 +195,7 @@ const styles = StyleSheet.create({
   },
   forgotPasswordText: {
     color: colors.primary,
-    fontSize: 14,
+    fontSize: scaleFontSize(14),
     fontWeight: '500',
   },
   loginButton: {
@@ -213,7 +214,7 @@ const styles = StyleSheet.create({
   dividerText: {
     marginHorizontal: spacing.md,
     color: colors.textMuted,
-    fontSize: 14,
+    fontSize: scaleFontSize(14),
   },
   footer: {
     flexDirection: 'row',
@@ -222,11 +223,11 @@ const styles = StyleSheet.create({
   },
   footerText: {
     color: colors.textSecondary,
-    fontSize: 15,
+    fontSize: scaleFontSize(15),
   },
   footerLink: {
     color: colors.primary,
-    fontSize: 15,
+    fontSize: scaleFontSize(15),
     fontWeight: '600',
   },
 });

@@ -19,6 +19,7 @@ import {
   getBookingStatusLabel,
   getBookingStatusColor,
 } from '@shared/utils';
+import { scale, verticalScale, scaleFontSize } from '@shared/utils/responsive';
 import type { DriverRide } from '@shared/types';
 
 export default function RideDetailsScreen() {
@@ -293,7 +294,7 @@ const styles = StyleSheet.create({
     backgroundColor: colors.surface,
   },
   bookingCode: {
-    fontSize: 14,
+    fontSize: scaleFontSize(14),
     fontWeight: '600',
     color: colors.textSecondary,
   },
@@ -308,9 +309,9 @@ const styles = StyleSheet.create({
     marginBottom: spacing.md,
   },
   customerAvatar: {
-    width: 56,
-    height: 56,
-    borderRadius: 28,
+    width: scale(56),
+    height: verticalScale(56),
+    borderRadius: scale(28),
     backgroundColor: `${colors.primary}15`,
     justifyContent: 'center',
     alignItems: 'center',
@@ -320,17 +321,17 @@ const styles = StyleSheet.create({
     marginLeft: spacing.md,
   },
   customerName: {
-    fontSize: 18,
+    fontSize: scaleFontSize(18),
     fontWeight: '600',
     color: colors.text,
   },
   customerPhone: {
-    fontSize: 14,
+    fontSize: scaleFontSize(14),
     color: colors.textSecondary,
-    marginTop: 2,
+    marginTop: verticalScale(2),
   },
   callButton: {
-    width: 48,
+    width: scale(48),
     paddingHorizontal: 0,
   },
   tripMeta: {
@@ -345,8 +346,8 @@ const styles = StyleSheet.create({
     marginRight: spacing.lg,
   },
   metaText: {
-    marginLeft: 6,
-    fontSize: 14,
+    marginLeft: scale(6),
+    fontSize: scaleFontSize(14),
     color: colors.textSecondary,
   },
   routeCard: {
@@ -354,7 +355,7 @@ const styles = StyleSheet.create({
     padding: spacing.md,
   },
   sectionTitle: {
-    fontSize: 16,
+    fontSize: scaleFontSize(16),
     fontWeight: '600',
     color: colors.text,
     marginBottom: spacing.md,
@@ -367,41 +368,41 @@ const styles = StyleSheet.create({
     alignItems: 'flex-start',
   },
   routeDot: {
-    width: 12,
-    height: 12,
-    borderRadius: 6,
+    width: scale(12),
+    height: verticalScale(12),
+    borderRadius: scale(6),
     backgroundColor: colors.primary,
-    marginTop: 4,
+    marginTop: verticalScale(4),
   },
   routeDotDest: {
     backgroundColor: colors.secondary,
   },
   routeLine: {
-    width: 2,
-    height: 32,
+    width: scale(2),
+    height: verticalScale(32),
     backgroundColor: colors.border,
-    marginLeft: 5,
-    marginVertical: 4,
+    marginLeft: scale(5),
+    marginVertical: verticalScale(4),
   },
   routeTextContainer: {
     flex: 1,
     marginLeft: spacing.sm,
   },
   routeLabel: {
-    fontSize: 11,
+    fontSize: scaleFontSize(11),
     color: colors.textMuted,
     textTransform: 'uppercase',
-    marginBottom: 2,
+    marginBottom: verticalScale(2),
   },
   routeAddress: {
-    fontSize: 15,
+    fontSize: scaleFontSize(15),
     fontWeight: '500',
     color: colors.text,
   },
   routeSubAddress: {
-    fontSize: 13,
+    fontSize: scaleFontSize(13),
     color: colors.textSecondary,
-    marginTop: 2,
+    marginTop: verticalScale(2),
   },
   dateTimeRow: {
     flexDirection: 'row',
@@ -415,8 +416,8 @@ const styles = StyleSheet.create({
     marginRight: spacing.lg,
   },
   dateTimeText: {
-    marginLeft: 6,
-    fontSize: 14,
+    marginLeft: scale(6),
+    fontSize: scaleFontSize(14),
     fontWeight: '500',
     color: colors.text,
   },
@@ -429,8 +430,8 @@ const styles = StyleSheet.create({
     borderTopColor: colors.border,
   },
   flightText: {
-    marginLeft: 6,
-    fontSize: 14,
+    marginLeft: scale(6),
+    fontSize: scaleFontSize(14),
     color: colors.textSecondary,
   },
   earningsCard: {
@@ -444,15 +445,15 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   earningsLabel: {
-    fontSize: 14,
+    fontSize: scaleFontSize(14),
     color: colors.textSecondary,
   },
   earningsNote: {
-    fontSize: 12,
+    fontSize: scaleFontSize(12),
     color: colors.textMuted,
   },
   earningsAmount: {
-    fontSize: 24,
+    fontSize: scaleFontSize(24),
     fontWeight: '700',
     color: colors.success,
   },
@@ -462,9 +463,9 @@ const styles = StyleSheet.create({
     padding: spacing.md,
   },
   notesText: {
-    fontSize: 14,
+    fontSize: scaleFontSize(14),
     color: colors.textSecondary,
-    lineHeight: 20,
+    lineHeight: verticalScale(20),
   },
   navigateContainer: {
     paddingHorizontal: spacing.md,
@@ -481,7 +482,7 @@ const styles = StyleSheet.create({
     padding: spacing.xl,
   },
   errorText: {
-    fontSize: 16,
+    fontSize: scaleFontSize(16),
     color: colors.textSecondary,
     textAlign: 'center',
     marginVertical: spacing.md,

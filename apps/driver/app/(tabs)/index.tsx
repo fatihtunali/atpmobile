@@ -19,6 +19,7 @@ import {
   getRelativeTime,
   formatCurrency,
 } from '@shared/utils';
+import { scale, verticalScale, scaleFontSize } from '@shared/utils/responsive';
 import type { DriverRide } from '@shared/types';
 
 export default function RidesScreen() {
@@ -217,9 +218,9 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   statusDot: {
-    width: 10,
-    height: 10,
-    borderRadius: 5,
+    width: scale(10),
+    height: scale(10),
+    borderRadius: scale(5),
     marginRight: spacing.sm,
   },
   statusDotOnline: {
@@ -229,7 +230,7 @@ const styles = StyleSheet.create({
     backgroundColor: colors.textMuted,
   },
   statusText: {
-    fontSize: 15,
+    fontSize: scaleFontSize(15),
     fontWeight: '600',
     color: colors.text,
   },
@@ -249,7 +250,7 @@ const styles = StyleSheet.create({
     borderBottomColor: colors.primary,
   },
   tabText: {
-    fontSize: 15,
+    fontSize: scaleFontSize(15),
     fontWeight: '500',
     color: colors.textMuted,
   },
@@ -276,12 +277,12 @@ const styles = StyleSheet.create({
   },
   rideTimeText: {
     marginLeft: spacing.xs,
-    fontSize: 18,
+    fontSize: scaleFontSize(18),
     fontWeight: '700',
     color: colors.primary,
   },
   rideDate: {
-    fontSize: 13,
+    fontSize: scaleFontSize(13),
     color: colors.textMuted,
   },
   routeContainer: {
@@ -292,9 +293,9 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   routeDot: {
-    width: 10,
-    height: 10,
-    borderRadius: 5,
+    width: scale(10),
+    height: scale(10),
+    borderRadius: scale(5),
     backgroundColor: colors.primary,
     marginRight: spacing.sm,
   },
@@ -302,15 +303,15 @@ const styles = StyleSheet.create({
     backgroundColor: colors.secondary,
   },
   routeLine: {
-    width: 2,
-    height: 16,
+    width: scale(2),
+    height: verticalScale(16),
     backgroundColor: colors.border,
-    marginLeft: 4,
-    marginVertical: 2,
+    marginLeft: scale(4),
+    marginVertical: scale(2),
   },
   routeText: {
     flex: 1,
-    fontSize: 14,
+    fontSize: scaleFontSize(14),
     color: colors.text,
   },
   rideFooter: {
@@ -326,13 +327,13 @@ const styles = StyleSheet.create({
     marginRight: spacing.md,
   },
   rideDetailText: {
-    marginLeft: 4,
-    fontSize: 13,
+    marginLeft: scale(4),
+    fontSize: scaleFontSize(13),
     color: colors.textSecondary,
   },
   rideEarnings: {
     marginLeft: 'auto',
-    fontSize: 16,
+    fontSize: scaleFontSize(16),
     fontWeight: '700',
     color: colors.success,
   },
@@ -346,7 +347,7 @@ const styles = StyleSheet.create({
   },
   flightText: {
     marginLeft: spacing.xs,
-    fontSize: 12,
+    fontSize: scaleFontSize(12),
     color: colors.textMuted,
   },
   empty: {
@@ -355,14 +356,14 @@ const styles = StyleSheet.create({
     paddingVertical: spacing.xl * 2,
   },
   emptyTitle: {
-    fontSize: 18,
+    fontSize: scaleFontSize(18),
     fontWeight: '600',
     color: colors.text,
     marginTop: spacing.md,
     marginBottom: spacing.xs,
   },
   emptyText: {
-    fontSize: 14,
+    fontSize: scaleFontSize(14),
     color: colors.textMuted,
     textAlign: 'center',
   },

@@ -10,7 +10,7 @@ import {
 import { Ionicons } from '@expo/vector-icons';
 import { Card, Loading, colors, spacing } from '@shared/components';
 import { partnerApi } from '@shared/api';
-import { formatCurrency, formatDate } from '@shared/utils';
+import { formatCurrency, formatDate, scale, verticalScale, scaleFontSize } from '@shared/utils';
 import type { EarningsSummary, Transaction } from '@shared/types';
 
 type PeriodFilter = 'today' | 'week' | 'month' | 'year';
@@ -221,14 +221,14 @@ const styles = StyleSheet.create({
     flex: 1,
     paddingVertical: spacing.sm,
     alignItems: 'center',
-    borderRadius: 8,
+    borderRadius: scale(8),
     backgroundColor: colors.surface,
   },
   periodButtonActive: {
     backgroundColor: colors.primary,
   },
   periodButtonText: {
-    fontSize: 14,
+    fontSize: scaleFontSize(14),
     fontWeight: '500',
     color: colors.textMuted,
   },
@@ -243,11 +243,11 @@ const styles = StyleSheet.create({
     backgroundColor: colors.primary,
   },
   mainEarningsLabel: {
-    fontSize: 14,
+    fontSize: scaleFontSize(14),
     color: 'rgba(255,255,255,0.8)',
   },
   mainEarningsValue: {
-    fontSize: 42,
+    fontSize: scaleFontSize(42),
     fontWeight: '700',
     color: '#fff',
     marginTop: spacing.xs,
@@ -263,21 +263,21 @@ const styles = StyleSheet.create({
     padding: spacing.lg,
   },
   statValue: {
-    fontSize: 18,
+    fontSize: scaleFontSize(18),
     fontWeight: '700',
     color: colors.text,
     marginTop: spacing.sm,
   },
   statLabel: {
-    fontSize: 12,
+    fontSize: scaleFontSize(12),
     color: colors.textMuted,
-    marginTop: 2,
+    marginTop: verticalScale(2),
   },
   transactionsSection: {
     padding: spacing.md,
   },
   sectionTitle: {
-    fontSize: 18,
+    fontSize: scaleFontSize(18),
     fontWeight: '600',
     color: colors.text,
     marginBottom: spacing.md,
@@ -289,9 +289,9 @@ const styles = StyleSheet.create({
     marginBottom: spacing.sm,
   },
   transactionIcon: {
-    width: 40,
-    height: 40,
-    borderRadius: 20,
+    width: scale(40),
+    height: verticalScale(40),
+    borderRadius: scale(20),
     backgroundColor: colors.background,
     alignItems: 'center',
     justifyContent: 'center',
@@ -301,17 +301,17 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   transactionDescription: {
-    fontSize: 14,
+    fontSize: scaleFontSize(14),
     fontWeight: '500',
     color: colors.text,
   },
   transactionDate: {
-    fontSize: 12,
+    fontSize: scaleFontSize(12),
     color: colors.textMuted,
-    marginTop: 2,
+    marginTop: verticalScale(2),
   },
   transactionAmount: {
-    fontSize: 16,
+    fontSize: scaleFontSize(16),
     fontWeight: '600',
     color: colors.text,
   },
@@ -326,7 +326,7 @@ const styles = StyleSheet.create({
     padding: spacing.xl,
   },
   emptyText: {
-    fontSize: 14,
+    fontSize: scaleFontSize(14),
     color: colors.textMuted,
     marginTop: spacing.md,
   },
@@ -341,14 +341,14 @@ const styles = StyleSheet.create({
     marginBottom: spacing.sm,
   },
   payoutInfoTitle: {
-    fontSize: 14,
+    fontSize: scaleFontSize(14),
     fontWeight: '600',
     color: colors.primary,
     marginLeft: spacing.sm,
   },
   payoutInfoText: {
-    fontSize: 13,
+    fontSize: scaleFontSize(13),
     color: colors.textMuted,
-    lineHeight: 20,
+    lineHeight: verticalScale(20),
   },
 });

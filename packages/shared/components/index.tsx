@@ -9,6 +9,7 @@ import {
   ViewStyle,
   TextStyle,
 } from 'react-native';
+import { scale, verticalScale, scaleFontSize } from '../utils/responsive';
 
 // ============================================
 // Theme Constants
@@ -301,7 +302,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
-    borderRadius: 12,
+    borderRadius: scale(12),
   },
   button_primary: {
     backgroundColor: colors.primary,
@@ -311,23 +312,23 @@ const styles = StyleSheet.create({
   },
   button_outline: {
     backgroundColor: 'transparent',
-    borderWidth: 1.5,
+    borderWidth: scale(1.5),
     borderColor: colors.primary,
   },
   button_ghost: {
     backgroundColor: 'transparent',
   },
   button_sm: {
-    paddingVertical: 8,
-    paddingHorizontal: 16,
+    paddingVertical: verticalScale(8),
+    paddingHorizontal: scale(16),
   },
   button_md: {
-    paddingVertical: 14,
-    paddingHorizontal: 24,
+    paddingVertical: verticalScale(14),
+    paddingHorizontal: scale(24),
   },
   button_lg: {
-    paddingVertical: 18,
-    paddingHorizontal: 32,
+    paddingVertical: verticalScale(18),
+    paddingHorizontal: scale(32),
   },
   buttonFullWidth: {
     width: '100%',
@@ -351,27 +352,27 @@ const styles = StyleSheet.create({
     color: colors.primary,
   },
   buttonText_sm: {
-    fontSize: 14,
+    fontSize: scaleFontSize(14),
   },
   buttonText_md: {
-    fontSize: 16,
+    fontSize: scaleFontSize(16),
   },
   buttonText_lg: {
-    fontSize: 18,
+    fontSize: scaleFontSize(18),
   },
   buttonIcon: {
-    marginRight: 8,
+    marginRight: scale(8),
   },
 
   // Input styles
   inputContainer: {
-    marginBottom: 16,
+    marginBottom: verticalScale(16),
   },
   inputLabel: {
-    fontSize: 14,
+    fontSize: scaleFontSize(14),
     fontWeight: '600',
     color: colors.text,
-    marginBottom: 8,
+    marginBottom: verticalScale(8),
   },
   inputWrapper: {
     flexDirection: 'row',
@@ -379,44 +380,44 @@ const styles = StyleSheet.create({
     backgroundColor: colors.surface,
     borderWidth: 1,
     borderColor: colors.border,
-    borderRadius: 12,
+    borderRadius: scale(12),
   },
   inputWrapperError: {
     borderColor: colors.error,
   },
   input: {
     flex: 1,
-    paddingVertical: 14,
-    paddingHorizontal: 16,
-    fontSize: 16,
+    paddingVertical: verticalScale(14),
+    paddingHorizontal: scale(16),
+    fontSize: scaleFontSize(16),
     color: colors.text,
   },
   inputWithLeftIcon: {
-    paddingLeft: 8,
+    paddingLeft: scale(8),
   },
   inputWithRightIcon: {
-    paddingRight: 8,
+    paddingRight: scale(8),
   },
   inputMultiline: {
-    minHeight: 100,
+    minHeight: verticalScale(100),
     textAlignVertical: 'top',
   },
   inputIcon: {
-    paddingLeft: 16,
+    paddingLeft: scale(16),
   },
   inputIconRight: {
-    paddingRight: 16,
+    paddingRight: scale(16),
   },
   inputError: {
-    fontSize: 12,
+    fontSize: scaleFontSize(12),
     color: colors.error,
-    marginTop: 4,
+    marginTop: verticalScale(4),
   },
 
   // Card styles
   card: {
     backgroundColor: colors.surface,
-    borderRadius: 16,
+    borderRadius: scale(16),
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.05,
@@ -426,21 +427,21 @@ const styles = StyleSheet.create({
 
   // Badge styles
   badge: {
-    paddingVertical: 4,
-    paddingHorizontal: 10,
-    borderRadius: 20,
+    paddingVertical: verticalScale(4),
+    paddingHorizontal: scale(10),
+    borderRadius: scale(20),
     alignSelf: 'flex-start',
   },
   badgeSm: {
-    paddingVertical: 2,
-    paddingHorizontal: 8,
+    paddingVertical: verticalScale(2),
+    paddingHorizontal: scale(8),
   },
   badgeText: {
-    fontSize: 12,
+    fontSize: scaleFontSize(12),
     fontWeight: '600',
   },
   badgeTextSm: {
-    fontSize: 10,
+    fontSize: scaleFontSize(10),
   },
 
   // Loading styles

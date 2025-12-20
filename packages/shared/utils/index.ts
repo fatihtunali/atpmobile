@@ -1,4 +1,6 @@
 import type { BookingStatus, PaymentStatus } from '@shared/types';
+// Export all responsive utilities
+export * from './responsive';
 
 // ============================================
 // Date & Time Formatters

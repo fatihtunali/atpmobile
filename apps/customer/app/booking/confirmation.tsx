@@ -11,11 +11,14 @@ import { Ionicons } from '@expo/vector-icons';
 import { Button, Card, Loading, Badge, colors, spacing } from '@shared/components';
 import { customerApi } from '@shared/api';
 import { formatCurrency, formatDate, formatTime, getBookingStatusLabel } from '@shared/utils';
+import { scale, verticalScale, scaleFontSize } from '@shared/utils/responsive';
 import type { Booking } from '@shared/types';
 
 export default function ConfirmationScreen() {
   const params = useLocalSearchParams();
   const bookingCode = params.bookingCode as string;
+  const customerEmail = params.email as string;
+  const customerName = params.name as string;
 
   const [booking, setBooking] = useState<Booking | null>(null);
   const [loading, setLoading] = useState(true);
@@ -25,10 +28,10 @@ export default function ConfirmationScreen() {
   }, [bookingCode]);
 
   const fetchBooking = async () => {
-    if (!bookingCode) return;
+    if (!bookingCode || !customerEmail) return;
 
     try {
-      const response = await customerApi.getBooking(bookingCode);
+      const response = await customerApi.getBooking(bookingCode, customerEmail);
       if (response.success && response.data) {
         setBooking(response.data);
       }
@@ -218,22 +221,22 @@ const styles = StyleSheet.create({
     backgroundColor: colors.surface,
   },
   checkCircle: {
-    width: 80,
-    height: 80,
-    borderRadius: 40,
+    width: scale(80),
+    height: scale(80),
+    borderRadius: scale(40),
     backgroundColor: colors.success,
     justifyContent: 'center',
     alignItems: 'center',
     marginBottom: spacing.md,
   },
   successTitle: {
-    fontSize: 24,
+    fontSize: scaleFontSize(24),
     fontWeight: '700',
     color: colors.text,
     marginBottom: spacing.xs,
   },
   bookingCode: {
-    fontSize: 16,
+    fontSize: scaleFontSize(16),
     color: colors.primary,
     fontWeight: '600',
   },
@@ -242,7 +245,7 @@ const styles = StyleSheet.create({
     padding: spacing.md,
   },
   sectionTitle: {
-    fontSize: 16,
+    fontSize: scaleFontSize(16),
     fontWeight: '600',
     color: colors.text,
     marginBottom: spacing.md,
@@ -259,11 +262,11 @@ const styles = StyleSheet.create({
     marginBottom: spacing.sm,
   },
   label: {
-    fontSize: 14,
+    fontSize: scaleFontSize(14),
     color: colors.textSecondary,
   },
   value: {
-    fontSize: 14,
+    fontSize: scaleFontSize(14),
     color: colors.text,
     fontWeight: '500',
     textAlign: 'right',
@@ -281,12 +284,12 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   totalLabel: {
-    fontSize: 18,
+    fontSize: scaleFontSize(18),
     fontWeight: '600',
     color: colors.text,
   },
   totalValue: {
-    fontSize: 24,
+    fontSize: scaleFontSize(24),
     fontWeight: '700',
     color: colors.primary,
   },
@@ -300,9 +303,9 @@ const styles = StyleSheet.create({
     marginBottom: spacing.md,
   },
   nextIcon: {
-    width: 40,
-    height: 40,
-    borderRadius: 20,
+    width: scale(40),
+    height: scale(40),
+    borderRadius: scale(20),
     backgroundColor: `${colors.primary}15`,
     justifyContent: 'center',
     alignItems: 'center',
@@ -312,13 +315,13 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   nextTitle: {
-    fontSize: 14,
+    fontSize: scaleFontSize(14),
     fontWeight: '600',
     color: colors.text,
-    marginBottom: 2,
+    marginBottom: scale(2),
   },
   nextText: {
-    fontSize: 13,
+    fontSize: scaleFontSize(13),
     color: colors.textSecondary,
   },
   buttonContainer: {
